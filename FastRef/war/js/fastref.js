@@ -1,8 +1,12 @@
-keyEvent = {}
+PDFDoc = "";
+currentPage = 1;
 
 keywords = {
-    ADD : { page: 1 },
-    AND : { page: 5 },
+    ADD : { page: 8 },
+    AND : { page: 9 },
+    BR  : { page: 10},
+    JMP : { page: 11},
+    RET : { page: 11},
     Memory : { page: 10 }
 };
 
@@ -24,6 +28,10 @@ $(document).ready(function(event) {
             if (keyword.toLowerCase() == $(this).val().toLowerCase()) {
                 keyword_res = keyword;
                 page_res = keywords[keyword].page;
+                if (page_res != currentPage) {
+                    renderPage(page_res);
+                    currentPage = page_res;
+                }
                 break;
             }
         }
@@ -32,3 +40,33 @@ $(document).ready(function(event) {
         $("p#page_res").text("page: " + page_res);
     });
 });
+
+
+var url = './LC-3b_ISA.pdf';
+PDFJS.workerSrc = 'js/pdf/pdf.worker.js';
+PDFJS.getDocument(url).then(function getPdfHelloWorld(pdf) {
+    PDFDoc = pdf;
+    renderPage(1);
+});
+
+function renderPage(pageNum) {
+    PDFDoc.getPage(pageNum).then(function getPageHelloWorld(page) {
+        var scale = 1.5;
+        var viewport = page.getViewport(scale);
+        //
+        // Prepare canvas using PDF page dimensions
+        //
+        var canvas = document.getElementById('the-canvas');
+        var context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        //
+        // Render PDF page into canvas context
+        //
+        var renderContext = {
+            canvasContext: context,
+            viewport: viewport
+        };
+        page.render(renderContext);
+    });
+}
