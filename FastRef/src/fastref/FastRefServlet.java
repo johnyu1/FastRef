@@ -22,7 +22,7 @@ public class FastRefServlet extends HttpServlet {
 		 * (userService.createLogoutURL(req.getRequestURI())); } else {
 		 * resp.sendRedirect(userService.createLoginURL(req.getRequestURI())); }
 		 */
-		resp.sendRedirect("/blog.jsp");
+		resp.sendRedirect("/prototype.html");
 	}
 
 }

@@ -53,7 +53,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <url-pattern>/unsubscribe</url-pattern>
     </servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>blog.jsp</welcome-file>
+		<welcome-file>prototype.html</welcome-file>
 	</welcome-file-list>
 	<filter>
         <filter-name>ObjectifyFilter</filter-name>
