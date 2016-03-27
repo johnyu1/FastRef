@@ -55,6 +55,22 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<welcome-file-list>
 		<welcome-file>prototype.html</welcome-file>
 	</welcome-file-list>
+	    <servlet>
+    	<servlet-name>upload</servlet-name>
+    	<servlet-class>fastref.UploadServlet</servlet-class>
+  	</servlet>
+   <servlet-mapping>
+		<servlet-name>upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>  
+	<servlet>
+    	<servlet-name>serve</servlet-name>
+    	<servlet-class>fastref.ServeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>serve</servlet-name>
+    	<url-pattern>/serve</url-pattern>
+  	</servlet-mapping>  
 	<filter>
         <filter-name>ObjectifyFilter</filter-name>
         <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
