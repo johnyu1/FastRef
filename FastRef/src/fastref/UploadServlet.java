@@ -52,13 +52,13 @@ public class UploadServlet extends HttpServlet {
 	        @SuppressWarnings("deprecation")
 	        Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
 	        BlobKey blobKey = blobs.get("document");
-	        if(blobKey == null) { 
-	        	res.sendRedirect("/upload.jsp");
-	        	return;
-	        }
 		 	BlobInfoFactory blobInfoFactory = new BlobInfoFactory();
 		 	BlobInfo blobInfo = blobInfoFactory.loadBlobInfo(blobKey);
 		 	String fileName = blobInfo.getFilename();	 
+	        if(fileName.equals("")) { 
+	        	res.sendRedirect("/upload.jsp");
+	        	return;
+	        }
 		 	String[] splitName = fileName.split(Pattern.quote("."));
 		 	String extension = splitName[splitName.length-1].toLowerCase();		 	
 		 	String fileType = "file";
