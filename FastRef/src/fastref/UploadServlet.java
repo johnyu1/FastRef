@@ -52,6 +52,10 @@ public class UploadServlet extends HttpServlet {
 	        @SuppressWarnings("deprecation")
 	        Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
 	        BlobKey blobKey = blobs.get("document");
+	        if(blobKey == null) { 
+	        	res.sendRedirect("/upload.jsp");
+	        	return;
+	        }
 		 	BlobInfoFactory blobInfoFactory = new BlobInfoFactory();
 		 	BlobInfo blobInfo = blobInfoFactory.loadBlobInfo(blobKey);
 		 	String fileName = blobInfo.getFilename();	 

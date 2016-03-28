@@ -9,47 +9,75 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
- 
 <%
-BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>
-
- 
-
 <html>
-
-  <head>
-	<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-  </head>
-
- 
-
-  <body>
-
-
+<head>
+	<title>Upload</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link type="text/css" rel="stylesheet" href="/stylesheets/bootstrap.css" />
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+	<script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript"></script>
+</head>
     
 <body>
-    <form action="<%= blobstoreService.createUploadUrl("/upload") %>" method="post" enctype="multipart/form-data">
-        <input type="file" name="document">
-        <input type="submit" value="Submit">
-        <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
-    </form>
-</body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="../">FastRef</a>
+			</div>
+			<div class="collapse navbar-collapse" id="mynavbar">
+				<ul class="nav navbar-nav">
+					<li><a href="../allEntries.jsp">All Files</a></li>
+					<li class="active"><a href="../upload.jsp">Upload</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">Login</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
+	<div class="container">
+		<img class="center-block" src="pictures/upload-cloud.svg" alt="Upload-cloud" style="width:50%;"></p>
+	</div>
 
+	<div class="container">
+	    <form role="form" action="<%= blobstoreService.createUploadUrl("/upload") %>" method="post" enctype="multipart/form-data">
+			<div class="form-group">
+				<label class="sr-only" for="file">Choose a file</label>
+				<input type="file" class="form-control" name="document"/>
+			</div>
+			
+			<button type="submit" class="btn btn-primary btn-lg center-block" value="Submit">Submit</button>
+		</form>
+	</div>
 <%
 	ObjectifyService.register(Document.class);
 	List<Document> documents = ObjectifyService.ofy().load().type(Document.class).list();   
 	Collections.sort(documents); 
     if (documents.isEmpty()) {
 %>
-        <p>There are no documents.</p>
+<!--<div class="container">
+		<p>No previously uploaded documents.</p>
+	</div>  -->
 <%
     } else {
 %>
-        <p>Current uploaded documents</p>
+	<div class="container">
+		<p>Currently uploaded documents:</p>
+	</div>
 <%
+		
         for (Document document : documents) {
             pageContext.setAttribute("document_name", document.getDocName());
             pageContext.setAttribute("document_ext", document.getDocExt());
@@ -78,24 +106,20 @@ BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService(
 	            {
 	            	docType = "fa fa-file-image-o";
 	            }
+				
             }
 			pageContext.setAttribute("document_type", docType);
            
 %>
-            <div>
-            	<a href=${fn:escapeXml(document_key)}>
-            		<i class='${fn:escapeXml(document_type)}' style="font-size:48px"></i>
-            		${fn:escapeXml(document_name)}
-            	</a>
-            	
-            </div>
-
+	<div class="container">
+		<a href=${fn:escapeXml(document_key)}>
+			<i class='${fn:escapeXml(document_type)}' style="font-size:48px"></i>
+				${fn:escapeXml(document_name)}
+		</a>     	
+	</div>
 <%
         }
     }
-
 %>
-
-  </body>
-
+</body>
 </html>
