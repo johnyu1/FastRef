@@ -40,7 +40,7 @@
 			</div>
 			<div class="collapse navbar-collapse" id="mynavbar">
 				<ul class="nav navbar-nav">
-					<li><a href="../allEntries.jsp">All Files</a></li>
+					<li><a href="../listfiles.jsp">All Files</a></li>
 					<li class="active"><a href="../upload.jsp">Upload</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
