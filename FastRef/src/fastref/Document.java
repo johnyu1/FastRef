@@ -18,15 +18,20 @@ public class Document implements Comparable<Document> {
     @Id Long id;
     User user;
     String documentName;
-    Date date;
     String documentKey;
+    String docExt;
+    String docType;
+    Date date;
+    
     
     private Document() {}
 
-    public Document(User user, String documentName, String documentKey) {
+    public Document(User user, String documentName, String documentKey, String docExt, String docType) {
         this.user = user;
         this.documentName = documentName;
         this.documentKey = documentKey;
+        this.docExt = docExt;
+        this.docType = docType;
         date = new Date();
     }
 
@@ -38,8 +43,16 @@ public class Document implements Comparable<Document> {
         return documentName;
     }
     
+    public String getDocExt() {
+        return docExt;
+    }
+    
     public String getDocKey() {
         return documentKey;
+    }
+    
+    public String getDocType() {
+        return docType;
     }
 
     @Override
