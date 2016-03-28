@@ -1,5 +1,3 @@
-// http://guestbook-v2-1207.appspot.com/ofyguestbook.jsp
-
 package fastref;
 
 
@@ -13,7 +11,6 @@ import com.google.appengine.api.users.UserServiceFactory;
 import fastref.Document;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +22,6 @@ import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 
 import java.util.Map;
 
@@ -57,6 +51,7 @@ public class UploadServlet extends HttpServlet {
 	        
 		 	res.sendRedirect("/upload.jsp");
 		 	
+		 	//Download the document using "/serve?blob-key=" + blobKey.getKeyString()"
 	       /* if (blobKey == null) {
 	            res.sendRedirect("/");
 	        } else {

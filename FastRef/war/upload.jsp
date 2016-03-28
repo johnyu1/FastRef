@@ -51,12 +51,16 @@ BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService(
 <%
         for (Document document : documents) {
             pageContext.setAttribute("document_name", document.getDocName());
-            String redirectURL="/serve?blob-key=" + document.getDocKey();
-            pageContext.setAttribute("document_key", redirectURL);
+            String downloadLink = "";
+            if(!document.getDocKey().equals(null))
+            {
+            	downloadLink="/serve?blob-key=" + document.getDocKey();
+            }
+            pageContext.setAttribute("document_key", downloadLink);
            
 %>
             <div>
-            	<a href= ${fn:escapeXml(redirectURL)}>${fn:escapeXml(document_name)}</a>
+            	<a href=${fn:escapeXml(document_key)}>${fn:escapeXml(document_name)}</a>
             </div>
 <%
         }
