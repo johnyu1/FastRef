@@ -59,7 +59,8 @@ public class UploadServlet extends HttpServlet {
 		 	BlobInfoFactory blobInfoFactory = new BlobInfoFactory();
 		 	BlobInfo blobInfo = blobInfoFactory.loadBlobInfo(blobKey);
 		 	String fileName = blobInfo.getFilename();	 
-		 	String extension = fileName.split(Pattern.quote("."))[1].toLowerCase();		 	
+		 	String[] splitName = fileName.split(Pattern.quote("."));
+		 	String extension = splitName[splitName.length-1].toLowerCase();		 	
 		 	String fileType = "file";
 		 	if(extension.equals("pdf"))
 		 	{

@@ -56,20 +56,21 @@ public class Document implements Comparable<Document> {
     }
 
     @Override
-
     public int compareTo(Document other) {
-
-        if (date.after(other.date)) {
-
-            return 1;
-
-        } else if (date.before(other.date)) {
-
-            return -1;
-
-        }
-
-        return 0;
+    	int compare = documentName.compareTo(other.documentName);
+    	if(compare == 0)
+    	{
+	        if (date.after(other.date)) {
+	
+	            return 1;
+	
+	        } else if (date.before(other.date)) {
+	
+	            return -1;
+	
+	        }
+    	}
+        return compare;
 
     }
 
