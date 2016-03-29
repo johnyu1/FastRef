@@ -70,11 +70,11 @@ public class UploadServlet extends HttpServlet {
 		 	{
 		 		fileType = "text";
 		 	}
-		 	else if(extension.equals("jpg") || fileType.equals("png") || fileType.equals("tiff"))
+		 	else if(extension.equals("jpg") || extension.equals("png") || extension.equals("tiff"))
 		 	{
 		 		fileType = "image";
 		 	}
-		 	else if(extension.equals("doc") || fileType.equals("docx"))
+		 	else if(extension.equals("doc") || extension.equals("docx"))
 		 	{
 		 		fileType = "word";
 		 	}

@@ -14,14 +14,12 @@
 %>
 <html>
 <head>
-	<title>Upload</title>
+	<title>All Files</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link type="text/css" rel="stylesheet" href="/stylesheets/fileinput.min.css" />
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 	<script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
-	<script src=js/fileinput.min.js type="text/javascript"</script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 </head>
@@ -55,17 +53,16 @@
 	Collections.sort(documents); 
     if (documents.isEmpty()) {
 %>
-<!--<div class="container">
+	<div class="container">
 		<p>No previously uploaded documents.</p>
-	</div>  -->
+	</div>
 <%
     } else {
 %>
 	<div class="container">
 		<p>Currently uploaded documents:</p>
 	</div>
-<%
-		
+<%	
         for (Document document : documents) {
             pageContext.setAttribute("document_name", document.getDocName());
             pageContext.setAttribute("document_ext", document.getDocExt());
