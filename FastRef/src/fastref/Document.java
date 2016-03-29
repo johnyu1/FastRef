@@ -5,6 +5,8 @@ import java.util.Date;
  
 
 
+import java.util.regex.Pattern;
+
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.annotation.Entity;
@@ -18,6 +20,7 @@ public class Document implements Comparable<Document> {
     @Id Long id;
     User user;
     String documentName;
+    String documentDisplayName;
     String documentKey;
     String docExt;
     String docType;
@@ -26,13 +29,59 @@ public class Document implements Comparable<Document> {
     
     private Document() {}
 
-    public Document(User user, String documentName, String documentKey, String docExt, String docType) {
+    public Document(User user, String documentName, String documentInputtedName, String documentKey) {
         this.user = user;
         this.documentName = documentName;
         this.documentKey = documentKey;
-        this.docExt = docExt;
-        this.docType = docType;
+        this.docExt = parseFileExtension(documentName);
+        this.docType = determineFileType(this.docExt);
+        this.documentDisplayName = createDisplayName(documentInputtedName.trim());
         date = new Date();
+    }
+    
+    public String createDisplayName(String documentInputtedName)
+    {
+    	String displayName = documentInputtedName;
+    	if(displayName.equals(""))
+    	{
+    		return documentName;
+    	}
+	 	String ext = parseFileExtension(displayName);
+	 	if(ext.equals(docExt))
+	 	{
+	 		return displayName;
+	 	}
+	 	return displayName + "." + docExt;
+    	
+    }
+    
+    public String parseFileExtension(String fileName)
+    {
+	 	String[] splitName = fileName.split(Pattern.quote("."));
+	 	String extension = splitName[splitName.length-1].toLowerCase();	
+	 	return extension;
+    }
+    
+    public String determineFileType(String extension)
+    {
+    	String fileType = "file";
+	 	if(extension.equals("pdf"))
+	 	{
+	 		fileType = "pdf";
+	 	}
+	 	else if(extension.equals("txt"))
+	 	{
+	 		fileType = "text";
+	 	}
+	 	else if(extension.equals("jpg") || extension.equals("png") || extension.equals("tiff"))
+	 	{
+	 		fileType = "image";
+	 	}
+	 	else if(extension.equals("doc") || extension.equals("docx"))
+	 	{
+	 		fileType = "word";
+	 	}
+	 	return fileType;
     }
 
     public User getUser() {
@@ -40,7 +89,7 @@ public class Document implements Comparable<Document> {
     }
 
     public String getDocName() {
-        return documentName;
+        return documentDisplayName;
     }
     
     public String getDocExt() {

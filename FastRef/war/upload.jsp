@@ -57,9 +57,14 @@
 	<div class="container">
 	    <form role="form" action="<%= blobstoreService.createUploadUrl("/upload") %>" method="post" enctype="multipart/form-data">
 			<div class="form-group">
+				 <label for="textArea">Rename File (leave blank for original file name): </label>
+                 <div>
+                     <textarea name="newFileName" class="form-control" rows="1" id="textArea"></textarea>
+                  </div>
 				<label class="sr-only" for="file">Choose a file</label>
 				<input type="file" class="file" name="document"/>
 			</div>
+
 			
 			<!-- <button type="submit" class="btn btn-primary btn-lg center-block" value="Submit">Submit</button>
 			 -->

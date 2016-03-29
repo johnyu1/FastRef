@@ -54,31 +54,13 @@ public class UploadServlet extends HttpServlet {
 	        BlobKey blobKey = blobs.get("document");
 		 	BlobInfoFactory blobInfoFactory = new BlobInfoFactory();
 		 	BlobInfo blobInfo = blobInfoFactory.loadBlobInfo(blobKey);
-		 	String fileName = blobInfo.getFilename();	 
+		 	String fileName = blobInfo.getFilename();
 	        if(fileName.equals("")) { 
 	        	res.sendRedirect("/upload.jsp");
 	        	return;
 	        }
-		 	String[] splitName = fileName.split(Pattern.quote("."));
-		 	String extension = splitName[splitName.length-1].toLowerCase();		 	
-		 	String fileType = "file";
-		 	if(extension.equals("pdf"))
-		 	{
-		 		fileType = "pdf";
-		 	}
-		 	else if(extension.equals("txt"))
-		 	{
-		 		fileType = "text";
-		 	}
-		 	else if(extension.equals("jpg") || extension.equals("png") || extension.equals("tiff"))
-		 	{
-		 		fileType = "image";
-		 	}
-		 	else if(extension.equals("doc") || extension.equals("docx"))
-		 	{
-		 		fileType = "word";
-		 	}
-	        Document document = new Document(user, fileName, blobKey.getKeyString(), extension, fileType);
+		 	String fileDisplayName = req.getParameter("newFileName");
+	        Document document = new Document(user, fileName, fileDisplayName, blobKey.getKeyString());
 		 	ofy().save().entities(document).now();		 	
 		 	
 		 	res.sendRedirect("/upload.jsp");
