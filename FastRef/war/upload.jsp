@@ -21,7 +21,7 @@
 	<link type="text/css" rel="stylesheet" href="/stylesheets/fileinput.min.css" />
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 	<script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
-	<script src=js/fileinput.min.js type="text/javascript"</script>
+	<script src=js/fileinput.min.js type="text/javascript"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 </head>

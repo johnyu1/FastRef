@@ -98,7 +98,7 @@
 %>
 	<div class="container">
 		<a href=${fn:escapeXml(document_key)}>
-			<i class='${fn:escapeXml(document_type)}' style="font-size:48px"></i>
+			<i class='${fn:escapeXml(document_type)}' style="font-size:32px"></i>
 				${fn:escapeXml(document_name)}
 		</a>     	
 	</div>
