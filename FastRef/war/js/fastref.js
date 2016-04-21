@@ -11,7 +11,7 @@ keywords = {
 };
 
 $(document).ready(function(event) {
-    $(document).keypress(function(event) {
+    $(document).keydown(function(event) {
         if (event.keyCode == 27) {
             $("#keyword").focus();
         }
