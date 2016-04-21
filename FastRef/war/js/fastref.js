@@ -36,8 +36,8 @@ $(document).ready(function(event) {
             }
         }
         
-        $("p#keyword_res").text("keyword: " + keyword_res);
-        $("p#page_res").text("page: " + page_res);
+        $("span#keyword_res").text(keyword_res);
+        $("span#page_res").text(page_res);
     });
 });
 
@@ -51,7 +51,7 @@ PDFJS.getDocument(url).then(function getPdfHelloWorld(pdf) {
 
 function renderPage(pageNum) {
     PDFDoc.getPage(pageNum).then(function getPageHelloWorld(page) {
-        var scale = 1.5;
+        var scale = 1.0;
         var viewport = page.getViewport(scale);
         //
         // Prepare canvas using PDF page dimensions
