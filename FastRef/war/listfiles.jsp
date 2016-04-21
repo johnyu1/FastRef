@@ -11,6 +11,11 @@
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
 <%
 	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	UserService userService = UserServiceFactory.getUserService();
+	User user = userService.getCurrentUser();
+	if (user != null) {
+		pageContext.setAttribute("user", user);
+	}
 %>
 <html>
 <head>
@@ -41,8 +46,23 @@
 					<li class="active"><a href="../listfiles.jsp">All Files</a></li>
 					<li><a href="../upload.jsp">Upload</a></li>
 				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="../listfiles.jsp">All Files</a></li>
+					<li class="active"><a href="../upload.jsp">Upload</a></li>
+				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Login</a></li>
+					<%
+						if (user != null) {
+					%>
+                  <li><a>Welcome ${fn:escapeXml(user.nickname)}</a></li>
+                  <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a></li>
+					<%
+						} else {
+					%>
+                  <li><a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign In</a></li>
+					<%
+					}
+					%>
 				</ul>
 			</div>
 		</div>
