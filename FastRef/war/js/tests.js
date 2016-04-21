@@ -13,3 +13,11 @@ QUnit.test("Load Document", function (assert) {
     loadPDF(callback);
 });
 
+QUnit.test("Keywords Sanity Check", function (assert) {
+    assert.ok(Object.keys(keywords).length > 0, "Positive amount of keywords");
+
+    for (keyword in keywords) {
+        assert.ok(typeof keyword == "string", "Check keyword identifier " + keyword);
+    }
+});
+
