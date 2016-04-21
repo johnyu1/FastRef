@@ -4,7 +4,12 @@ QUnit.test("Init", function (assert) {
     assert.ok(typeof keywords !== "undefined", "Keywords Provided");
 });
 
-QUnit.test("Init", function (assert) {
-    assert.ok(currentPage == 1, "Page init: " + currentPage);
-    assert.ok(pdf_url, "PDF URL Provided: " + pdf_url);
+QUnit.test("Load Document", function (assert) {
+    var done = assert.async();
+    callback = function() {
+        assert.ok(PDFDoc !== false, "Loading PDF at url " + pdf_url);
+        done();
+    };
+    loadPDF(callback);
 });
+
