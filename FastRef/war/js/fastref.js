@@ -1,4 +1,4 @@
-PDFDoc = "";
+PDFDoc = false;
 currentPage = 1;
 
 keywords = {
@@ -52,12 +52,15 @@ function searchKeyword(input) {
 }
 
 
-var url = './LC-3b_ISA.pdf';
+var pdf_url = './LC-3b_ISA.pdf';
 PDFJS.workerSrc = 'js/pdf/pdf.worker.js';
-PDFJS.getDocument(url).then(function getPdfHelloWorld(pdf) {
-    PDFDoc = pdf;
-    renderPage(1);
-});
+
+function loadPDF(callback = function(){}) {
+    PDFJS.getDocument(pdf_url).then(function getPdfHelloWorld(pdf) {
+        PDFDoc = pdf;
+        callback();
+    });
+}
 
 function renderPage(pageNum) {
     PDFDoc.getPage(pageNum).then(function getPageHelloWorld(page) {
