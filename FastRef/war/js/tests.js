@@ -21,3 +21,11 @@ QUnit.test("Keywords Sanity Check", function (assert) {
     }
 });
 
+QUnit.test("Page Number Checks", function (assert) {
+    for (keyword in keywords) {
+        page = keywords[keyword].page;
+        assert.ok(page >= 1 &&
+                  page < PDFDoc.pdfInfo.numPages,
+                  "Check valid page number for keyword (" + keyword + "): " + page);
+    }
+});
