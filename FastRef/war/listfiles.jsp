@@ -148,45 +148,48 @@
 	</div>
 <%	
         for (Document document : documents) {
-            pageContext.setAttribute("document_name", document.getDocName());
-            pageContext.setAttribute("document_ext", document.getDocExt());
-            String downloadLink = "";
-            if(!document.getDocKey().equals(null))
-            {
-            	downloadLink="/serve?blob-key=" + document.getDocKey();
-            }
-            pageContext.setAttribute("document_key", downloadLink);
-            String documentType = document.getDocType();
-            String docType = "fa fa-file-o";
-            if(documentType != null) {
-				if(documentType.equals("pdf"))
+        	if(document.getDocRestriction().equals("public") || (document.getUser() != null && 
+        			document.getUser().equals(user))){
+	            pageContext.setAttribute("document_name", document.getDocName());
+	            pageContext.setAttribute("document_ext", document.getDocExt());
+	            String downloadLink = "";
+	            if(!document.getDocKey().equals(null))
 	            {
-	            	docType = "fa fa-file-pdf-o";
+	            	downloadLink="/serve?blob-key=" + document.getDocKey();
 	            }
-	            else if(documentType.equals("text"))
-	            {
-	            	docType = "fa fa-file-text-o";
+	            pageContext.setAttribute("document_key", downloadLink);
+	            String documentType = document.getDocType();
+	            String docType = "fa fa-file-o";
+	            if(documentType != null) {
+					if(documentType.equals("pdf"))
+		            {
+		            	docType = "fa fa-file-pdf-o";
+		            }
+		            else if(documentType.equals("text"))
+		            {
+		            	docType = "fa fa-file-text-o";
+		            }
+		            else if(documentType.equals("word"))
+		            {
+		            	docType = "fa fa-file-word-o";
+		            }
+		            else if(documentType.equals("image"))
+		            {
+		            	docType = "fa fa-file-image-o";
+		            }
+					
 	            }
-	            else if(documentType.equals("word"))
-	            {
-	            	docType = "fa fa-file-word-o";
-	            }
-	            else if(documentType.equals("image"))
-	            {
-	            	docType = "fa fa-file-image-o";
-	            }
-				
-            }
-			pageContext.setAttribute("document_type", docType);
-           
-%>
-	<div class="container">
-		<a href=${fn:escapeXml(document_key)}>
-			<i class='${fn:escapeXml(document_type)}' style="font-size:32px"></i>
-				${fn:escapeXml(document_name)}
-		</a>     	
-	</div>
-<%
+				pageContext.setAttribute("document_type", docType);
+	           
+	%>
+		<div class="container">
+			<a href=${fn:escapeXml(document_key)}>
+				<i class='${fn:escapeXml(document_type)}' style="font-size:32px"></i>
+					${fn:escapeXml(document_name)}
+			</a>     	
+		</div>
+	<%
+        	}
         }
     }
 %>
