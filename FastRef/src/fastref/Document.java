@@ -109,6 +109,9 @@ public class Document implements Comparable<Document> {
     public String getDocRestriction() {
         return docRestriction;
     }
+    public Date getDocDate(){
+    	return date;
+    }
 
     @Override
     public int compareTo(Document other) {
