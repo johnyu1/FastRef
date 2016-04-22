@@ -1,65 +1,65 @@
-Feature: Check restricted access to files
+Feature: Check FastRef functionality
 	
 	Scenario: User access public file while not logged in
 		Given User not logged in
 		Given File is public
 		When User accesses file
-		Then OK
+		Then status code is 200
 
 	Scenario: User access public file while logged in
 		Given User logged in
 		Given File is public
 		When User accesses file
-		Then OK
+		Then status code is 200
 	
 	Scenario: User access private file while not logged in
 		Given User not logged in
 		Given File is private
 		When User accesses file
-		Then Not Found
+		Then status code is 404
 
 	Scenario: User access private file while logged in
 		Given User logged in
 		Given File is private
 		When User accesses file
-		Then OK
+		Then status code is 200
 
 	Scenario: User uploads a public file
 		Given User logged in
-		When User uploads public file
-		Then OK
+		When User uploads file
+		Then status code is 200
 
 	Scenario: User uploads a private file
 		Given User logged in
-		When User uploads private file
-		Then OK
+		When User uploads file
+		Then status code is 200
 
 	Scenario: User deletes a public file
 		Given User logged in
-		When User deletes public file
-		Then OK
+		When User deletes file
+		Then status code is 200
 
 	Scenario: User deletes a private file
 		Given User logged in
-		When User deletes private file
-		Then OK
+		When User deletes file
+		Then status code is 200
 
 	Scenario: User adds tags to public file while not logged in
 		Given User not logged in
 		Given File is public
 		When User adds tag
-		Then OK
+		Then status code is 200
 
 	Scenario: User adds tags to public file while logged in
 		Given User logged in
 		Given File is public
 		When User adds tag
-		Then OK
+		Then status code is 200
 
 	Scenario: User adds tags to private file while logged in
 		Given User logged in
 		Given File is private
 		When User adds tag
-		Then OK
+		Then status code is 200
 
 	
