@@ -69,7 +69,10 @@
 	<div class="container">
 		<img class="center-block" src="pictures/upload-cloud.svg" alt="Upload-cloud" style="width:50%;"></p>
 	</div>
-
+<%
+	if(user != null)
+	{
+%>
 	<div class="container">
 	    <form role="form" action="<%= blobstoreService.createUploadUrl("/upload") %>" method="post" enctype="multipart/form-data">
 			<div class="form-group">
@@ -88,11 +91,21 @@
 			 -->
 		</form>
 	</div>
-
+<%
+	}
+	else{
+%>
+		<div class="container">
+			<p>Sign-in to upload documents.</p>
+		</div>
+<%
+	}
+%>
 	<div class="container">
 		<p>Private Documents: </p>
 	</div>
 <%
+	
 	ObjectifyService.register(Document.class);
 	List<Document> documents = ObjectifyService.ofy().load().type(Document.class).list();   
 	Collections.sort(documents); 
