@@ -11,6 +11,11 @@
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
 <%
 	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	UserService userService = UserServiceFactory.getUserService();
+	User user = userService.getCurrentUser();
+	if (user != null) {
+		pageContext.setAttribute("user", user);
+	}
 %>
 <html>
 <head>
@@ -44,7 +49,18 @@
 					<li class="active"><a href="../upload.jsp">Upload</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Login</a></li>
+					<%
+						if (user != null) {
+					%>
+                  <li><a>Welcome ${fn:escapeXml(user.nickname)}</a></li>
+                  <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a></li>
+					<%
+						} else {
+					%>
+                  <li><a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign In</a></li>
+					<%
+					}
+					%>
 				</ul>
 			</div>
 		</div>
@@ -53,7 +69,10 @@
 	<div class="container">
 		<img class="center-block" src="pictures/upload-cloud.svg" alt="Upload-cloud" style="width:50%;"></p>
 	</div>
-
+<%
+	if(user != null)
+	{
+%>
 	<div class="container">
 	    <form role="form" action="<%= blobstoreService.createUploadUrl("/upload") %>" method="post" enctype="multipart/form-data">
 			<div class="form-group">
@@ -61,6 +80,8 @@
                  <div>
                      <textarea name="newFileName" class="form-control" rows="1" id="textArea"></textarea>
                   </div>
+                <input type="radio" name="restriction" value="private" checked> Private<br>
+				<input type="radio" name="restriction" value="public"> Public<br>
 				<label class="sr-only" for="file">Choose a file</label>
 				<input type="file" class="file" name="document"/>
 			</div>
@@ -71,9 +92,88 @@
 		</form>
 	</div>
 <%
+	}
+	else{
+%>
+		<div class="container">
+			<p>Sign-in to upload documents.</p>
+		</div>
+<%
+	}
+%>
+	<div class="container">
+		<p>Private Documents: </p>
+	</div>
+<%
+	
 	ObjectifyService.register(Document.class);
 	List<Document> documents = ObjectifyService.ofy().load().type(Document.class).list();   
 	Collections.sort(documents); 
+	if(documents.isEmpty()){
+%>
+		<div class="container">
+			<p>None</p>
+		</div>
+<%
+	}
+	else if(user != null){
+		int i = 0;
+        for (Document document : documents) {
+        	if(document.getDocRestriction().equals("private") && document.getUser() != null && 
+        			document.getUser().equals(user)){
+        		i++;
+	            pageContext.setAttribute("document_name", document.getDocName());
+	            pageContext.setAttribute("document_ext", document.getDocExt());
+	            pageContext.setAttribute("document_restrictions", document.getDocRestriction());
+	            String downloadLink = "";
+	            if(!document.getDocKey().equals(null)){
+	            	downloadLink="/serve?blob-key=" + document.getDocKey();
+	            }
+	            pageContext.setAttribute("document_key", downloadLink);
+	            String documentType = document.getDocType();
+	            String docType = "fa fa-file-o";
+	            if(documentType != null) {
+					if(documentType.equals("pdf")){
+		            	docType = "fa fa-file-pdf-o";
+		            }
+		            else if(documentType.equals("text")){
+		            	docType = "fa fa-file-text-o";
+		            }
+		            else if(documentType.equals("word")){
+		            	docType = "fa fa-file-word-o";
+		            }
+		            else if(documentType.equals("image")){
+		            	docType = "fa fa-file-image-o";
+		            }
+					
+	            }
+				pageContext.setAttribute("document_type", docType);	           
+%>
+			<div class="container">
+				<a href=${fn:escapeXml(document_key)}>
+					<i class='${fn:escapeXml(document_type)}' style="font-size:48px"></i>
+						${fn:escapeXml(document_name)}
+				</a>     	
+			</div>
+<%
+        	}
+        }
+		if(i == 0){
+%>
+			<div class="container">
+				<p>None</p>
+			</div>
+<%
+    	} 
+	
+	}
+	else{
+%>
+		<div class="container">
+			<p>Sign-in to access your private documents.</p>
+		</div>
+<%		
+	}
     if (documents.isEmpty()) {
 %>
 <!--<div class="container">
@@ -83,50 +183,54 @@
     } else {
 %>
 	<div class="container">
-		<p>Currently uploaded documents:</p>
+		<p>All uploaded documents:</p>
 	</div>
 <%
 		
         for (Document document : documents) {
-            pageContext.setAttribute("document_name", document.getDocName());
-            pageContext.setAttribute("document_ext", document.getDocExt());
-            String downloadLink = "";
-            if(!document.getDocKey().equals(null))
-            {
-            	downloadLink="/serve?blob-key=" + document.getDocKey();
-            }
-            pageContext.setAttribute("document_key", downloadLink);
-            String documentType = document.getDocType();
-            String docType = "fa fa-file-o";
-            if(documentType != null) {
-				if(documentType.equals("pdf"))
+        	if(document.getDocRestriction().equals("public") || (document.getUser() != null && 
+        			document.getUser().equals(user))){
+	            pageContext.setAttribute("document_name", document.getDocName());
+	            pageContext.setAttribute("document_ext", document.getDocExt());
+	            pageContext.setAttribute("document_restrictions", document.getDocRestriction());
+	            String downloadLink = "";
+	            if(!document.getDocKey().equals(null))
 	            {
-	            	docType = "fa fa-file-pdf-o";
+	            	downloadLink="/serve?blob-key=" + document.getDocKey();
 	            }
-	            else if(documentType.equals("text"))
-	            {
-	            	docType = "fa fa-file-text-o";
+	            pageContext.setAttribute("document_key", downloadLink);
+	            String documentType = document.getDocType();
+	            String docType = "fa fa-file-o";
+	            if(documentType != null) {
+					if(documentType.equals("pdf"))
+		            {
+		            	docType = "fa fa-file-pdf-o";
+		            }
+		            else if(documentType.equals("text"))
+		            {
+		            	docType = "fa fa-file-text-o";
+		            }
+		            else if(documentType.equals("word"))
+		            {
+		            	docType = "fa fa-file-word-o";
+		            }
+		            else if(documentType.equals("image"))
+		            {
+		            	docType = "fa fa-file-image-o";
+		            }
+					
 	            }
-	            else if(documentType.equals("word"))
-	            {
-	            	docType = "fa fa-file-word-o";
-	            }
-	            else if(documentType.equals("image"))
-	            {
-	            	docType = "fa fa-file-image-o";
-	            }
-				
-            }
-			pageContext.setAttribute("document_type", docType);
-           
+				pageContext.setAttribute("document_type", docType);
+	           
 %>
-	<div class="container">
-		<a href=${fn:escapeXml(document_key)}>
-			<i class='${fn:escapeXml(document_type)}' style="font-size:48px"></i>
-				${fn:escapeXml(document_name)}
-		</a>     	
-	</div>
+		<div class="container">
+			<a href=${fn:escapeXml(document_key)}>
+				<i class='${fn:escapeXml(document_type)}' style="font-size:48px"></i>
+					${fn:escapeXml(document_name)}
+			</a>     
+		</div>
 <%
+        	}
         }
     }
 %>

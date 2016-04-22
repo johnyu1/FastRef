@@ -1,4 +1,4 @@
-PDFDoc = "";
+PDFDoc = false;
 currentPage = 1;
 
 keywords = {
@@ -11,7 +11,7 @@ keywords = {
 };
 
 $(document).ready(function(event) {
-    $(document).keypress(function(event) {
+    $(document).keydown(function(event) {
         if (event.keyCode == 27) {
             $("#keyword").focus();
         }
@@ -22,32 +22,45 @@ $(document).ready(function(event) {
     });
     
     $("#keyword").keyup(function(event) {
-        var keyword_res = "";
-        var page_res = "";
-        for (keyword in keywords) {
-            if (keyword.toLowerCase() == $(this).val().toLowerCase()) {
-                keyword_res = keyword;
-                page_res = keywords[keyword].page;
-                if (page_res != currentPage) {
-                    renderPage(page_res);
-                    currentPage = page_res;
-                }
-                break;
-            }
-        }
-        
-        $("span#keyword_res").text(keyword_res);
-        $("span#page_res").text(page_res);
+        searchAndUpdate($(this).val());
     });
 });
 
+function searchAndUpdate(text) {
+    var keyword_res = "";
+    var page_res = "";
+    keyword_res = searchKeyword(text);
+    
+    if (keyword_res) {
+        page_res = keywords[keyword].page;
+        
+        if (page_res != currentPage) {
+            currentPage = page_res;
+            renderPage(page_res);
+            $("span#keyword_res").text(keyword_res);
+            $("span#page_res").text(page_res);   
+        }
+    }
+}
 
-var url = './LC-3b_ISA.pdf';
+function searchKeyword(input) {
+    for (keyword in keywords) {
+        if (keyword.toLowerCase() == input.toLowerCase()) {
+            return keyword;
+        }
+    }
+}
+
+
+var pdf_url = './LC-3b_ISA.pdf';
 PDFJS.workerSrc = 'js/pdf/pdf.worker.js';
-PDFJS.getDocument(url).then(function getPdfHelloWorld(pdf) {
-    PDFDoc = pdf;
-    renderPage(1);
-});
+
+function loadPDF(callback = function(){}) {
+    PDFJS.getDocument(pdf_url).then(function getPdfHelloWorld(pdf) {
+        PDFDoc = pdf;
+        callback();
+    });
+}
 
 function renderPage(pageNum) {
     PDFDoc.getPage(pageNum).then(function getPageHelloWorld(page) {

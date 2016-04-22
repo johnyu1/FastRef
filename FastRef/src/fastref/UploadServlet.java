@@ -22,15 +22,8 @@ import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-import com.google.appengine.api.images.Image;
-import com.google.appengine.api.images.ImagesService;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.Transform;
-
-
 
 import java.util.Map;
-import java.util.regex.Pattern;
 
 
 
@@ -40,9 +33,7 @@ public class UploadServlet extends HttpServlet {
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 	
 	static {
-
         ObjectifyService.register(Document.class);
-
     }
 	 @Override
 	    public void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -60,8 +51,18 @@ public class UploadServlet extends HttpServlet {
 	        	return;
 	        }
 		 	String fileDisplayName = req.getParameter("newFileName");
-	        Document document = new Document(user, fileName, fileDisplayName, blobKey.getKeyString());
-		 	ofy().save().entities(document).now();		 	
+		 	String restriction = req.getParameter("restriction");
+	        Document document = new Document(user, fileName, fileDisplayName, blobKey.getKeyString(), restriction);
+		 	ofy().save().entities(document).now();	
+		 	/*if(restriction.equals("private"))
+		 	{
+		 		ofy().save().entities(new PrivateDocument(user, fileName, fileDisplayName, blobKey.getKeyString())).now();
+		 	}
+		 	else
+		 	{
+		 		ofy().save().entities(new PublicDocument(user, fileName, fileDisplayName, blobKey.getKeyString())).now();
+		 	}*/
+		 	
 		 	
 		 	res.sendRedirect("/upload.jsp");
 		 	
