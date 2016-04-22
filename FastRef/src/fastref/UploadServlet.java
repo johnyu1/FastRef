@@ -56,7 +56,7 @@ public class UploadServlet extends HttpServlet {
 	        }
 		 	String fileDisplayName = req.getParameter("newFileName");
 		 	String restriction = req.getParameter("restriction");
-	        Document document = new Document(user, fileName, fileDisplayName, restriction, blobKey.getKeyString());
+	        Document document = new Document(user, fileName, fileDisplayName, blobKey.getKeyString(), restriction);
 		 	ofy().save().entities(document).now();	
 		 	/*if(restriction.equals("private"))
 		 	{
