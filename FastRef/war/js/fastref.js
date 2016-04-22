@@ -17,6 +17,10 @@ $(document).ready(function(event) {
         }
     });
     
+    $("#keyword-form").submit(function(event) {
+        event.preventDefault();
+    });
+
     $("#keyword").focus(function(event) {
         this.select();
     });

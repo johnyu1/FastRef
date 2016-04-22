@@ -4,6 +4,14 @@ QUnit.test("Init", function (assert) {
     assert.ok(typeof keywords !== "undefined", "Keywords Provided");
 });
 
+QUnit.test("Keywords Sanity Check", function (assert) {
+    assert.ok(Object.keys(keywords).length > 0, "Positive amount of keywords");
+
+    for (keyword in keywords) {
+        assert.ok(typeof keyword == "string", "Check keyword identifier " + keyword);
+    }
+});
+
 QUnit.test("Load Document", function (assert) {
     var done = assert.async();
     callback = function() {
@@ -11,14 +19,6 @@ QUnit.test("Load Document", function (assert) {
         done();
     };
     loadPDF(callback);
-});
-
-QUnit.test("Keywords Sanity Check", function (assert) {
-    assert.ok(Object.keys(keywords).length > 0, "Positive amount of keywords");
-
-    for (keyword in keywords) {
-        assert.ok(typeof keyword == "string", "Check keyword identifier " + keyword);
-    }
 });
 
 QUnit.test("Page Number Checks", function (assert) {
@@ -29,6 +29,21 @@ QUnit.test("Page Number Checks", function (assert) {
             assert.ok(page >= 1 &&
                       page < PDFDoc.pdfInfo.numPages,
                       "Check valid page number for keyword (" + keyword + "): " + page);
+        }
+
+        done();
+    }
+    loadPDF(callback);
+});
+
+QUnit.test("Keyword Test", function (assert) {
+    var done = assert.async();
+    callback = function() {
+        for (keyword in keywords) {
+            searchAndUpdate(keyword);
+            page = keywords[keyword].page;
+            assert.ok(page == currentPage,
+                      "Check page load for keyword (" + keyword + "): " + page);
         }
 
         done();
