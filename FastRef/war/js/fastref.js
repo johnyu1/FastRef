@@ -21,6 +21,10 @@ $(document).ready(function(event) {
     $("#keyword-form").submit(function(event) {
         event.preventDefault();
     });
+    
+    $(".click-remove").click(function(event) {
+        removeKeyword(this);
+    });
 
     $("#keyword").focus(function(event) {
         this.select();
@@ -55,6 +59,12 @@ function updateCurrent(newOne) {
     $("#kw-"+newOne).addClass("bg-primary");
     
     currentKW = newOne;
+}
+
+function removeKeyword(element) {
+    keyword = $(element).parent()[0].id.substr(3);
+    $(element).parent().parent()[0].remove(); // Remove the thing on the page
+    delete keywords[keyword];
 }
 
 function searchKeyword(input) {
