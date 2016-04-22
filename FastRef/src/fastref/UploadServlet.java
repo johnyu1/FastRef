@@ -60,7 +60,8 @@ public class UploadServlet extends HttpServlet {
 	        	return;
 	        }
 		 	String fileDisplayName = req.getParameter("newFileName");
-	        Document document = new Document(user, fileName, fileDisplayName, blobKey.getKeyString());
+		 	String restriction = req.getParameter("restriction");
+	        Document document = new Document(user, fileName, fileDisplayName, restriction, blobKey.getKeyString());
 		 	ofy().save().entities(document).now();		 	
 		 	
 		 	res.sendRedirect("/upload.jsp");

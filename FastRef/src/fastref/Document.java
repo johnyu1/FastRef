@@ -24,15 +24,17 @@ public class Document implements Comparable<Document> {
     String documentKey;
     String docExt;
     String docType;
+    String docRestriction;
     Date date;
     
     
     private Document() {}
 
-    public Document(User user, String documentName, String documentInputtedName, String documentKey) {
+    public Document(User user, String documentName, String documentInputtedName, String documentKey, String restriction) {
         this.user = user;
         this.documentName = documentName;
         this.documentKey = documentKey;
+        this.docRestriction = restriction;
         this.docExt = parseFileExtension(documentName);
         this.docType = determineFileType(this.docExt);
         this.documentDisplayName = createDisplayName(documentInputtedName.trim());
@@ -85,7 +87,7 @@ public class Document implements Comparable<Document> {
     }
 
     public User getUser() {
-        return user;
+    	return user;
     }
 
     public String getDocName() {
@@ -102,6 +104,10 @@ public class Document implements Comparable<Document> {
     
     public String getDocType() {
         return docType;
+    }
+    
+    public String getDocRestriction() {
+        return docRestriction;
     }
 
     @Override

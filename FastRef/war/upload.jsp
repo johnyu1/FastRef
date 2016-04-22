@@ -77,6 +77,8 @@
                  <div>
                      <textarea name="newFileName" class="form-control" rows="1" id="textArea"></textarea>
                   </div>
+                <input type="radio" name="restriction" value="private" checked> Private<br>
+				<input type="radio" name="restriction" value="public"> Public<br>
 				<label class="sr-only" for="file">Choose a file</label>
 				<input type="file" class="file" name="document"/>
 			</div>
