@@ -33,11 +33,7 @@ public class UploadServlet extends HttpServlet {
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 	
 	static {
-
         ObjectifyService.register(Document.class);
-        ObjectifyService.register(PrivateDocument.class);
-        ObjectifyService.register(PublicDocument.class);
-
     }
 	 @Override
 	    public void doPost(HttpServletRequest req, HttpServletResponse res)
