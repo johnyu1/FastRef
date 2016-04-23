@@ -5,17 +5,14 @@ class SessionGoogle:
         self.ses = requests.session()
         login_html = self.ses.get(url_login)
         soup_login = BeautifulSoup(login_html.content).find('form').find_all('input')
-        links = BeautifulSoup(login_html.content).find_all('a')
-        dico = {}
+        info = {}
         for u in soup_login:
             if u.has_attr('value'):
-                dico[u['name']] = u['value']
+                info[u['name']] = u['value']
         # override the inputs with out login and pwd:
-        dico['Email'] = login
-        dico['Passwd'] = pwd
-        self.ses.post(url_auth, data=dico)
-        for link in links:
-        	print link.get('href')
+        info['Email'] = login
+        info['Passwd'] = pwd
+        self.ses.post(url_auth, data=info)
     def get(self, URL):
         return self.ses.get(URL).text
 
