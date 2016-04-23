@@ -135,6 +135,9 @@ function insertKeywordPanel(keyword, page) {
     new_element.children("div").children(".click-remove").click(function (event) {
         removeKeyword(this);
     });
+    new_element.click(function (event) {
+        searchAndUpdate(keyword);
+    });
 }
 
 function createAllPanels() {
