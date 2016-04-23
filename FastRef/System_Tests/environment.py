@@ -9,3 +9,7 @@ def before_all(context):
 	context.url = 'http://1-dot-fast-ref.appspot.com/'
 	context.publicfname = 'publictest.pdf'
 	context.privatefname = 'privatetest.pdf'
+	context.payld = {
+		'restriction':''
+		'document':''
+	}
