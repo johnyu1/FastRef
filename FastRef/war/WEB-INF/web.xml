@@ -15,12 +15,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>FastRef</servlet-name>
 		<url-pattern>/fastref</url-pattern>
 	</servlet-mapping>
-<<<<<<< HEAD
-	<welcome-file-list>
-		<welcome-file>prototype.html</welcome-file>
-	</welcome-file-list>
-	<servlet>
-=======
 	<servlet>
 		<servlet-name>Home</servlet-name>
 		<servlet-class>fastref.HomeServlet</servlet-class>
@@ -29,8 +23,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>Home</servlet-name>
 		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
-	    <servlet>
->>>>>>> refs/remotes/origin/master
+    <servlet>
     	<servlet-name>upload</servlet-name>
     	<servlet-class>fastref.UploadServlet</servlet-class>
   	</servlet>
