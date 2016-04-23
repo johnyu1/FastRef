@@ -29,12 +29,12 @@ $(document).ready(function(event) {
     
         new_keyword = $("#add-keyword").val();
         new_page    = parseInt($("#add-page").val());
-        if (new_page == NaN || new_page < 1 || new_page > PDFDoc.pdfInfo.numPages) {
+        if (isNaN(new_page) || new_page < 1 || new_page > PDFDoc.pdfInfo.numPages) {
             console.log("Invalid page: "+new_page);
             return;
         }
         
-        if (keywordExists(new_keyword)) {
+        if (new_keyword.length == 0 || keywordExists(new_keyword)) {
             console.log("Keyword already exists: "+new_keyword);
             return;
         }
@@ -50,6 +50,20 @@ $(document).ready(function(event) {
     
     $(".click-remove").click(function(event) {
         removeKeyword(this);
+    });
+    
+    $("#page-less").click(function(event) {
+        if (currentPage == 1) { return; }
+        updatePage(currentPage - 1);
+        $("#keyword").val("");
+        removeCurrent();
+    });
+    
+    $("#page-more").click(function(event) {
+        if (currentPage == PDFDoc.pdfInfo.numPages) { return; }
+        updatePage(currentPage + 1);
+        $("#keyword").val("");
+        removeCurrent();
     });
 
     $("#keyword").focus(function(event) {
@@ -68,23 +82,30 @@ function searchAndUpdate(text) {
     
     if (keyword_res) {
         page_res = keywords[keyword].page;
-        
-        if (page_res != currentPage) {
-            currentPage = page_res;
-            renderPage(page_res);
-        }
-        
+        updatePage(page_res);        
         updateCurrent(keyword);
     }
 }
 
-function updateCurrent(newOne) {
-    if (currentKW !== 0) {
-        $("#kw-"+currentKW).removeClass("bg-primary");
+function updatePage(newPage) {    
+    if (newPage != currentPage) {
+        currentPage = newPage;
+        $("#page-num").text(newPage);
+        renderPage(newPage);
     }
+}
+
+function updateCurrent(newOne) {
+    removeCurrent();
     $("#kw-"+newOne).addClass("bg-primary");
     
     currentKW = newOne;
+}
+
+function removeCurrent() {
+    if (currentKW !== 0) {
+        $("#kw-"+currentKW).removeClass("bg-primary");
+    }
 }
 
 function removeKeyword(element) {
