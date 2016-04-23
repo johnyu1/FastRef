@@ -19,6 +19,7 @@
     <style>
     .keyword-panel {
         margin-top: 10px;
+        margin-bottom: 0px;
     }
 
     .click-remove {
@@ -59,20 +60,23 @@
  		<div class="row">
 			<div class="col-md-4"> 
 				<form role="form" id="keyword-form" class="form-inline">
-					<label for="text">Keyword: </label>
 					<input class="form-control" type="text" id="keyword" placeholder="Enter keyword"/>
+                    <span class="pull-right">
+                    <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default" id="page-less"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                    <button type="button" class="btn btn-default disabled" style="cursor: default" id="page-num">1</button>
+                    <button type="button" class="btn btn-default" id="page-more"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                    </div>
+                    </span>
 				</form>
                 
                 <form role="form" id="keyword-add-form" class="form-inline" style="margin-top: 50px">
 					<input class="form-control" type="text" id="add-keyword" placeholder="New Keyword"/>
 					<input class="form-control" style="width: 60px" type="text" id="add-page" placeholder="Page"/>
+                    <button class="btn btn-default" type="submit">Add</button>
 				</form>
                 
-				<div class="panel panel-default keyword-panel">
-                    <div class="panel-body" style="padding: 10px" id="kw-ADD">
-                    <span class="badge">Page 8</span> <span class="kw">ADD</span>
-                    <span class="pull-right click-remove"><span class="glyphicon glyphicon-remove"></span></span>
-                    </div>
+                <div id="panel-holder" style="margin: 0px; padding: 0px">
                 </div>
  			</div>
 			<div class="col-md-8"> 

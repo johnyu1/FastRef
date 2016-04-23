@@ -53,7 +53,7 @@
 						if (user != null) {
 					%>
                   <li><a>Welcome ${fn:escapeXml(user.nickname)}</a></li>
-                  <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a></li>
+                  <li><a href="<%= userService.createLogoutURL("/") %>">Sign Out</a></li>
 					<%
 						} else {
 					%>
