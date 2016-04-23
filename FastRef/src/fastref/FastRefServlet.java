@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FastRefServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-
-	throws IOException {
+			throws IOException {
 
 		/*
 		 * UserService userService = UserServiceFactory.getUserService(); User
@@ -22,7 +21,7 @@ public class FastRefServlet extends HttpServlet {
 		 * (userService.createLogoutURL(req.getRequestURI())); } else {
 		 * resp.sendRedirect(userService.createLoginURL(req.getRequestURI())); }
 		 */
-		resp.sendRedirect("/prototype.html");
+		resp.sendRedirect("/home.jsp");
 	}
 
 }
