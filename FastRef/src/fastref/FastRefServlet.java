@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FastRefServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-
-	throws IOException {
+			throws IOException {
 
 		/*
 		 * UserService userService = UserServiceFactory.getUserService(); User

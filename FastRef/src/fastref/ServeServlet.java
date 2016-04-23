@@ -1,6 +1,5 @@
 package fastref;
 
-
 import java.io.IOException;
 
 import javax.servlet.http.HttpServlet;
@@ -11,14 +10,14 @@ import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
-
 public class ServeServlet extends HttpServlet {
-    private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	private BlobstoreService blobstoreService = BlobstoreServiceFactory
+			.getBlobstoreService();
 
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse res)
-        throws IOException {
-            BlobKey blobKey = new BlobKey(req.getParameter("blob-key"));
-            blobstoreService.serve(blobKey, res);
-        }
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse res)
+			throws IOException {
+		BlobKey blobKey = new BlobKey(req.getParameter("blob-key"));
+		blobstoreService.serve(blobKey, res);
+	}
 }
