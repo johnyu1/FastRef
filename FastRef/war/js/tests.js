@@ -36,6 +36,14 @@ QUnit.test("Page Number Checks", function (assert) {
     loadPDF(callback);
 });
 
+QUnit.test("Keyword Exists Test", function (assert) {
+    kw = Object.keys(keywords)[0];
+    notAKW = "doesNotExist";
+    assert.ok(keywordExists(kw) === true, "Check keyword ("+kw+") exists");
+    assert.ok(keywordExists(kw.toLowerCase()) === true, "Check keyword ("+kw+") lowercase exists");
+    assert.ok(keywordExists(notAKW) === false, "Check keyword ("+notAKW+") doesn't exist");
+});
+
 QUnit.test("Keyword Test", function (assert) {
     var done = assert.async();
     callback = function() {
