@@ -1,5 +1,6 @@
 PDFDoc = false;
 currentPage = 1;
+currentKW = 0;
 
 keywords = {
     ADD : { page: 8 },
@@ -17,6 +18,10 @@ $(document).ready(function(event) {
         }
     });
     
+    $("#keyword-form").submit(function(event) {
+        event.preventDefault();
+    });
+
     $("#keyword").focus(function(event) {
         this.select();
     });
@@ -37,10 +42,19 @@ function searchAndUpdate(text) {
         if (page_res != currentPage) {
             currentPage = page_res;
             renderPage(page_res);
-            $("span#keyword_res").text(keyword_res);
-            $("span#page_res").text(page_res);   
         }
+        
+        updateCurrent(keyword);
     }
+}
+
+function updateCurrent(newOne) {
+    if (currentKW !== 0) {
+        $("#kw-"+currentKW).removeClass("bg-primary");
+    }
+    $("#kw-"+newOne).addClass("bg-primary");
+    
+    currentKW = newOne;
 }
 
 function searchKeyword(input) {

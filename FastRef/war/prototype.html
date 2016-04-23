@@ -15,7 +15,20 @@
     
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	
+
+    <style>
+    .keyword-panel {
+        margin-top: 10px;
+    }
+
+    .click-remove {
+        cursor: pointer;
+    }
+
+    .kw {
+        margin-left: 10px;
+    }
+    </style>
 </head>
 
 <body>
@@ -45,13 +58,22 @@
 	<div class="container">
  		<div class="row">
 			<div class="col-md-4"> 
-				<form role="form" action="post" class="form-inline">
+				<form role="form" id="keyword-form" class="form-inline">
 					<label for="text">Keyword: </label>
 					<input class="form-control" type="text" id="keyword" placeholder="Enter keyword"/>
 				</form>
-				<p></p>
-				<p>Keyword found: <span id="keyword_res"></span></p>
-				<p>Page found: <span id="page_res"></span></p>
+                
+                <form role="form" id="keyword-add-form" class="form-inline" style="margin-top: 50px">
+					<input class="form-control" type="text" id="add-keyword" placeholder="New Keyword"/>
+					<input class="form-control" style="width: 60px" type="text" id="add-page" placeholder="Page"/>
+				</form>
+                
+				<div class="panel panel-default keyword-panel">
+                    <div class="panel-body" style="padding: 10px" id="kw-ADD">
+                    <span class="badge">Page 8</span> <span class="kw">ADD</span>
+                    <span class="pull-right click-remove"><span class="glyphicon glyphicon-remove"></span></span>
+                    </div>
+                </div>
  			</div>
 			<div class="col-md-8"> 
 				<canvas id="the-canvas" style="border:1px  solid black"></canvas>
