@@ -16,4 +16,6 @@ class SessionGoogle:
     def get(self, URL):
         return self.ses.get(URL).text
 
+    def post(self, URL, data=None):
+    	return self.ses.post(URL, data).text
 
