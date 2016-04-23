@@ -12,6 +12,8 @@ keywords = {
 };
 
 $(document).ready(function(event) {
+    createAllPanels();
+
     $(document).keydown(function(event) {
         if (event.keyCode == 27) {
             $("#keyword").focus();
@@ -97,7 +99,6 @@ function keywordExists(new_keyword) {
             return true;
         }
     }
-    
     return false;
 }
 
@@ -108,11 +109,18 @@ function insertKeywordPanel(keyword, page) {
                             '<span class="pull-right click-remove"><span class="glyphicon glyphicon-remove"></span></span>' +
                         '</div>' +
                     '</div>';
-    $(".keyword-panel:first-of-type").before(kw_panel_html);
+    $("#panel-holder").prepend(kw_panel_html);
     new_element = $(".keyword-panel:first-of-type");
     new_element.children("div").children(".click-remove").click(function (event) {
         removeKeyword(this);
     });
+}
+
+function createAllPanels() {
+    keys = Object.keys(keywords);
+    for (i = keys.length - 1; i >= 0; i--) {
+        insertKeywordPanel(keys[i], keywords[keys[i]].page);
+    }
 }
 
 function searchKeyword(input) {
