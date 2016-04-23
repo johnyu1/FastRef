@@ -20,6 +20,7 @@
     .keyword-panel {
         margin-top: 10px;
         margin-bottom: 0px;
+        cursor: pointer;
     }
 
     .click-remove {
@@ -71,12 +72,13 @@
 				</form>
                 
                 <form role="form" id="keyword-add-form" class="form-inline" style="margin-top: 50px">
-					<input class="form-control" type="text" id="add-keyword" placeholder="New Keyword"/>
+					<input class="form-control" type="text" id="add-keyword" placeholder="New Keyword" style="width: 170px" />
 					<input class="form-control" style="width: 60px" type="text" id="add-page" placeholder="Page"/>
                     <button class="btn btn-default" type="submit">Add</button>
+                    <button class="btn btn-success">Save</button>
 				</form>
                 
-                <div id="panel-holder" style="margin: 0px; padding: 0px">
+                <div id="panel-holder" style="margin-bottom: 20px; padding: 0px; max-height: 500px">
                 </div>
  			</div>
 			<div class="col-md-8"> 
