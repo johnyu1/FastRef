@@ -22,6 +22,30 @@ $(document).ready(function(event) {
         event.preventDefault();
     });
     
+    $("#keyword-add-form").submit(function(event) {
+        event.preventDefault();
+    
+        new_keyword = $("#add-keyword").val();
+        new_page    = parseInt($("#add-page").val());
+        if (new_page == NaN || new_page < 1 || new_page > PDFDoc.pdfInfo.numPages) {
+            console.log("Invalid page: "+new_page);
+            return;
+        }
+        
+        if (keywordExists(new_keyword)) {
+            console.log("Keyword already exists: "+new_keyword);
+            return;
+        }
+        
+        keywords[new_keyword] = {page: new_page};
+        insertKeywordPanel(new_keyword, new_page);
+        
+        $("#add-keyword").val("");
+        $("#add-page").val("");
+        $("#add-keyword").blur();
+        $("#add-page").blur();
+    });
+    
     $(".click-remove").click(function(event) {
         removeKeyword(this);
     });
@@ -65,6 +89,30 @@ function removeKeyword(element) {
     keyword = $(element).parent()[0].id.substr(3);
     $(element).parent().parent()[0].remove(); // Remove the thing on the page
     delete keywords[keyword];
+}
+
+function keywordExists(new_keyword) {
+    for (keyword in keywords) {
+        if (new_keyword.toLowerCase() == keyword.toLowerCase()) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+function insertKeywordPanel(keyword, page) {
+    kw_panel_html = '<div class="panel panel-default keyword-panel">' +
+                        '<div class="panel-body" style="padding: 10px" id="kw-'+keyword+'">' + 
+                            '<span class="badge">Page '+page+'</span> <span class="kw">'+keyword+'</span>' + 
+                            '<span class="pull-right click-remove"><span class="glyphicon glyphicon-remove"></span></span>' +
+                        '</div>' +
+                    '</div>';
+    $(".keyword-panel:first-of-type").before(kw_panel_html);
+    new_element = $(".keyword-panel:first-of-type");
+    new_element.children("div").children(".click-remove").click(function (event) {
+        removeKeyword(this);
+    });
 }
 
 function searchKeyword(input) {
