@@ -24,17 +24,31 @@ public class Document implements Comparable<Document> {
 	Date date;
 	
 	/**
-	 * Default Constructor
+	 * Default Constructor. Creates a default document.
+	 * <br>User: "FastRefTest@gmail.com"
+	 * <br>documentName: "Default.pdf"
+	 * <br>documentKey: null
+	 * <br>restriction: "private"
 	 * 
 	 */
 	public Document() {
+		this.user = new User("FastRefTest@gmail.com", "gmail.com");
+		this.documentName = "Default.pdf";
+		this.documentDisplayName = "Default";
+		this.documentKey = null;
+		this.docExt = parseFileExtension(documentName);
+		this.docType = determineFileType(this.docExt);
+		this.docRestriction = "private";
+		this.documentBookmarks = "";
+		date = new Date();
+	
 	}
 	
 	/**
 	 * Document constructor - populates the fields
 	 * 
 	 * @param user a User object
-	 * @param documentName the original name of the document
+	 * @param documentName the original name of the document. Must have an extension at the end (.pdf, .txt, .doc, etc.)
 	 * @param documentInputtedName the new inputed name to rename the document
 	 * @param documentKey the document blobKey.toString()
 	 * @param restriction the restriction setting (either "public" or "private")
@@ -47,41 +61,45 @@ public class Document implements Comparable<Document> {
 		this.docRestriction = restriction;
 		this.docExt = parseFileExtension(documentName);
 		this.docType = determineFileType(this.docExt);
-		this.documentDisplayName = createDisplayName(documentInputtedName
-				.trim());
+		this.documentDisplayName = createDisplayName(documentName.trim(), documentInputtedName.trim());
 		this.documentBookmarks = "";
 		date = new Date();
 	}
 	
 	/**
-	 * Returns a correctly formatted display name based on 
-	 * inputed rename String of document
+	 * Compares the extension of the original file name and new file name to determine
+	 * the correct display name. Returns a correctly formatted display name.
 	 * 
-	 * @param documentInputtedName the inputed new document name
+	 * @param origName the original document name (has an extension)
+	 * @param newName the inputed new document name
 	 * @return String display name with correctly appended extension
 	 */
-	public String createDisplayName(String documentInputtedName) {
-		String displayName = documentInputtedName;
-		if (displayName.equals("")) {
-			return documentName;
+	public String createDisplayName(String origName, String newName) {
+		if (newName.equals("")) {
+			return origName;
 		}
-		String ext = parseFileExtension(displayName);
-		if (ext.equals(docExt)) {
+		String displayName = newName;
+		String origExt = parseFileExtension(origName);
+		String newExt = parseFileExtension(newName);
+		if (newExt.equals(origExt)) {
 			return displayName;
 		}
-		return displayName + "." + docExt;
-
+		return displayName + "." + origExt;
 	}
 	
 	/**
-	 * Parses the document name to get the 
-	 * file extension
+	 * Parses the document name to get the file extension.
+	 * If no extension, then null ("") is returned.
 	 * 
-	 * @param fileName the document name
-	 * @return the file extension
+	 * @param fileName the document name. Must have an extension.
+	 * @return the file extension. Default is ""
 	 */
 	public String parseFileExtension(String fileName) {
 		String[] splitName = fileName.split(Pattern.quote("."));
+		if(splitName.length <= 1)
+		{
+			return "";
+		}
 		String extension = splitName[splitName.length - 1].toLowerCase();
 		return extension;
 	}
