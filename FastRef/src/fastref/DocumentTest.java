@@ -55,6 +55,16 @@ public class DocumentTest {
 	 * and verifies correct display name created
 	 */
 	@Test
+	public void testCreateDisplayNameWithNoNewName() {
+		String displayName = document.createDisplayName("OrigName.pdf", "");
+		assertEquals("OrigName.pdf", displayName);
+	}
+	
+	/**
+	 * Creates display name with a file name that has a no extension
+	 * and verifies correct display name created
+	 */
+	@Test
 	public void testCreateDisplayNameWithNoExt() {
 		String displayName = document.createDisplayName("OrigName.pdf", "NewName");
 		assertEquals("NewName.pdf", displayName);
