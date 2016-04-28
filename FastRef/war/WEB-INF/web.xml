@@ -47,6 +47,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   		<servlet-name>viewer</servlet-name>
   		<url-pattern>/viewer</url-pattern>
   	</servlet-mapping>
+  	  	<servlet>
+    	<servlet-name>delete</servlet-name>
+    	<servlet-class>fastref.DeleteServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+  		<servlet-name>delete</servlet-name>
+  		<url-pattern>/delete</url-pattern>
+  	</servlet-mapping>
 	<filter>
         <filter-name>ObjectifyFilter</filter-name>
         <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
