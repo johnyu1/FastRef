@@ -99,14 +99,14 @@ function updatePage(newPage) {
 
 function updateCurrent(newOne) {
     removeCurrent();
-    $("#kw-"+newOne).addClass("bg-primary");
+    $("[id='kw-"+newOne+"']").addClass("bg-primary");
     
     currentKW = newOne;
 }
 
 function removeCurrent() {
     if (currentKW !== 0) {
-        $("#kw-"+currentKW).removeClass("bg-primary");
+        $("[id='kw-"+currentKW+"']").removeClass("bg-primary");
     }
 }
 
