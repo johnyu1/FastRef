@@ -106,7 +106,7 @@
 				<form role="form" id="keyword-form" class="form-inline">
 					<input class="form-control" type="text" id="keyword" placeholder="Enter keyword"/>
                     <span class="pull-right">
-                    <div class="btn-group" role="group">
+                    <div class="btn-group" role="group" style="display:flex">
                     <button type="button" class="btn btn-default" id="page-less"><span class="glyphicon glyphicon-chevron-left"></span></button>
                     <button type="button" class="btn btn-default disabled" style="cursor: default" id="page-num">1</button>
                     <button type="button" class="btn btn-default" id="page-more"><span class="glyphicon glyphicon-chevron-right"></span></button>
