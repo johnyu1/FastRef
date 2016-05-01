@@ -45,6 +45,22 @@
             renderPage(1);
         });
     </script>
+    
+    <style>
+    .keyword-panel {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        cursor: pointer;
+    }
+
+    .click-remove {
+        cursor: pointer;
+    }
+
+    .kw {
+        margin-left: 10px;
+    }
+    </style>
 	
 
 </head>
