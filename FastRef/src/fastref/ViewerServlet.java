@@ -31,7 +31,7 @@ public class ViewerServlet extends HttpServlet {
 				serve = d;
 			}
 		}
-		serve.getUser();
+//		serve.getUser().equals(user);
 		
 //		if(!serve.getUser().equals(user)) {
 			//resp.sendError(404);

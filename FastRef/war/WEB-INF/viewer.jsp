@@ -43,19 +43,19 @@
 			</div>
 			<div class="collapse navbar-collapse" id="mynavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="../listfiles.jsp">All Files</a></li>
-					<li><a href="../upload.jsp">Upload</a></li>
+					<li class="active"><a href="../listfiles">All Files</a></li>
+					<li><a href="../upload">Upload</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<%
 						if (user != null) {
 					%>
                   <li><a>Welcome ${fn:escapeXml(user.nickname)}</a></li>
-                  <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a></li>
+                  <li><a href="<%= userService.createLogoutURL("/viewer") %>">Sign Out</a></li>
 					<%
 						} else {
 					%>
-                  <li><a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign In</a></li>
+                  <li><a href="<%= userService.createLoginURL("/viewer") %>">Sign In</a></li>
 					<%
 					}
 					%>

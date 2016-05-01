@@ -2,6 +2,7 @@ package fastref;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ListFilesServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
+			throws ServletException, IOException {
 
 		/*
 		 * UserService userService = UserServiceFactory.getUserService(); User
@@ -24,6 +25,7 @@ public class ListFilesServlet extends HttpServlet {
 		 * (userService.createLogoutURL(req.getRequestURI())); } else {
 		 * resp.sendRedirect(userService.createLoginURL(req.getRequestURI())); }
 		 */
-		resp.sendRedirect("/listfiles.jsp");
+		
+		req.getRequestDispatcher("/WEB-INF/listfiles.jsp").forward(req, resp);
 	}
 }

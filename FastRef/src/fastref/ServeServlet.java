@@ -2,6 +2,7 @@ package fastref;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ public class ServeServlet extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
-			throws IOException {
+			throws ServletException, IOException {
 		BlobKey blobKey = new BlobKey(req.getParameter("blob-key"));
 		blobstoreService.serve(blobKey, res);
 	}

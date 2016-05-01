@@ -32,6 +32,13 @@ public class UploadServlet extends HttpServlet {
 	static {
 		ObjectifyService.register(Document.class);
 	}
+	
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		req.getRequestDispatcher("/WEB-INF/upload.jsp").forward(req, resp);
+	
+	}
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -45,7 +52,8 @@ public class UploadServlet extends HttpServlet {
 		BlobInfo blobInfo = blobInfoFactory.loadBlobInfo(blobKey);
 		String fileName = blobInfo.getFilename();
 		if (fileName.equals("")) {
-			res.sendRedirect("/upload.jsp");
+	//		req.getRequestDispatcher("/WEB-INF/upload.jsp").forward(req, res);
+			res.sendRedirect("/upload/");
 			return;
 		}
 		String fileDisplayName = req.getParameter("newFileName");
@@ -61,8 +69,8 @@ public class UploadServlet extends HttpServlet {
 		 * blobKey.getKeyString())).now(); }
 		 */
 
-		res.sendRedirect("/upload.jsp");
-
+	//	req.getRequestDispatcher("/WEB-INF/upload.jsp").forward(req, res);
+		res.sendRedirect("/upload/");
 		// Download the document using "/serve?blob-key=" +
 		// blobKey.getKeyString()"
 		/*
