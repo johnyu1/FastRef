@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
+<%@ page import="java.net.URLEncoder" %>
 <%@ page import="fastref.Document" %>
 <%@ page import="com.googlecode.objectify.*" %>
 <%@ page import="com.google.appengine.api.users.User" %>
@@ -27,8 +28,40 @@
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 	<script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<script src="js/pdf/pdf.js"></script>
-	<script src="js/fastref.js"></script>
+    
+        <style>
+    iframe {
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .iframe-parent {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .thumbnail:hover {
+        text-decoration: none;
+    }
+    
+    .document {
+        padding-bottom: 10px;
+    }
+    
+    .thumb-title {
+        margin: 0;
+    }
+    </style>
+    
+    <script>
+        $(document).ready(function() {
+            $(".delete-btn").click(function(event) {
+                event.preventDefault();
+                window.location.replace($(this).attr("href"));
+            });
+        });
+    </script>
 </head>
     
 <body>
@@ -66,17 +99,15 @@
 		</div>
 	</nav>
 	<div class="container">
-		<p>Private Documents: </p>
-	</div>
+		<h2>My Files</h2>
+        <div class="row">
 <%
 	ObjectifyService.register(Document.class);
 	List<Document> documents = ObjectifyService.ofy().load().type(Document.class).list();   
 	Collections.sort(documents); 
 	if(documents.isEmpty()){
 %>
-		<div class="container">
 			<p>None</p>
-		</div>
 <%
 	}
 	else if(user != null){
@@ -89,10 +120,14 @@
 	            pageContext.setAttribute("document_ext", document.getDocExt());
 	            pageContext.setAttribute("document_restrictions", document.getDocRestriction());
 	            String downloadLink = "";
+                String pdfLink = "";
 	            if(!document.getDocKey().equals(null)){
 	            	downloadLink="/viewer?blob-key=" + document.getDocKey();
+                    pdfLink="http://fast-ref.appspot.com/serve?blob-key=" + blobkey;
+                    pdfLink = URLEncoder.encode(pdfLink, "UTF-8");
 	            }
 	            pageContext.setAttribute("document_key", downloadLink);
+                pageContext.setAttribute("document_link", pdfLink);
 	            String deleteLink ="/delete?blob-key=" + document.getDocKey();
 	            pageContext.setAttribute("delete_link", deleteLink);
 	            String documentType = document.getDocType();
@@ -114,51 +149,47 @@
 	            }
 				pageContext.setAttribute("document_type", docType);	           
 %>
-			<div class="container">
-				<a href=${fn:escapeXml(document_key)}>
-					<i class='${fn:escapeXml(document_type)}' style="font-size:48px"></i>
-						${fn:escapeXml(document_name)}
-				</a>     	
-<%
-				if(user != null && document.getUser().equals(user))
-				{
-%>
-					<a href=${fn:escapeXml(delete_link)}>Delete</a>
-<%
-				}
-%>	
-			</div>
+            <div class="col-xs-4 document">
+                <a href=${fn:escapeXml(document_key)} class="thumbnail">
+                  <span class="iframe-parent">
+                    <iframe src="web/viewer.html?file=<%= document_link %>"></iframe>
+                  </span>
+                  
+                  <span class="caption" style="padding: 0">
+                    <span><h1 class="thumb-title" style="margin-left: 10px; display: inline-block;"><small>${fn:escapeXML(document_name)}</small></h1>
+                    <span class="pull-right"><button href=${fn:escapeXML(delete_link)} class="btn btn-danger delete-btn" style="margin-left: 10px; margin-top: 5px;">Delete</button></span></span><br />
+                    <small style="margin-left: 40px; margin-bottom: 50px">Thursday 10:30pm</small><br />
+                    <small style="margin-left: 40px; margin-bottom: 50px">20 Tags</small>
+                  </span>
+                </a>
+            </div>
 <%
         	}
         }
 		if(i == 0){
 %>
-			<div class="container">
-				<p>None</p>
-			</div>
+            <p>None</p>
 <%
     	} 
 	
 	}
 	else{
 %>
-		<div class="container">
-			<p>Sign-in to access your private documents.</p>
-		</div>
+        <p>Sign-in to access your private documents.</p>
 <%		
 	}
+%>
+    </div>
+    
+    <h2>All Files</h2>
+    <div class="row">
+<%
+    
     if (documents.isEmpty()) {
 %>
-	<div class="container">
-		<p>No previously uploaded documents.</p>
-	</div>
+    <p>No previously uploaded documents.</p>
 <%
     } else {
-%>
-	<div class="container">
-		<p>Currently uploaded documents:</p>
-	</div>
-<%	
         for (Document document : documents) {
         	if(document.getDocRestriction().equals("public") || (document.getUser() != null && 
         			document.getUser().equals(user))){
@@ -195,25 +226,22 @@
 	            }
 				pageContext.setAttribute("document_type", docType);
 	           
-%>
-		<div class="container">
-			<a href=${fn:escapeXml(document_key)}>
-				<i class='${fn:escapeXml(document_type)}' style="font-size:32px"></i>
-					${fn:escapeXml(document_name)}
-			</a>     	
-<%
-				if(user != null && document.getUser().equals(user))
-				{
-%>
-					<a href=${fn:escapeXml(delete_link)}>Delete</a>
-<%
-				}
-%>			
-		</div>
+%>	
+        <div class="col-xs-4 document">
+            <a href=${fn:escapeXml(document_key)} class="thumbnail">
+              <span class="caption" style="padding: 0">
+                <span><h1 class="thumb-title" style="margin-left: 10px; display: inline-block;"><small>${fn:escapeXML(document_name)}</small></h1></span><br />
+                <small style="margin-left: 40px; margin-bottom: 50px">Thursday 10:30pm</small><br />
+                <small style="margin-left: 40px; margin-bottom: 50px">20 Tags</small>
+              </span>
+            </a>
+        </div>
 <%
         	}
         }
     }
 %>
+        </div>
+        </div>
 </body>
 </html>
