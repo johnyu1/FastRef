@@ -44,6 +44,7 @@ public class UploadServlet extends HttpServlet {
 		BlobInfoFactory blobInfoFactory = new BlobInfoFactory();
 		BlobInfo blobInfo = blobInfoFactory.loadBlobInfo(blobKey);
 		String fileName = blobInfo.getFilename();
+		String viewerLink = "/viewer?blob-key=" + blobKey.getKeyString();
 		if (fileName.equals("")) {
 			res.sendRedirect("/upload.jsp");
 			return;
@@ -53,22 +54,13 @@ public class UploadServlet extends HttpServlet {
 		Document document = new Document(user, fileName, fileDisplayName,
 				blobKey.getKeyString(), restriction);
 		ofy().save().entities(document).now();
-		/*
-		 * if(restriction.equals("private")) { ofy().save().entities(new
-		 * PrivateDocument(user, fileName, fileDisplayName,
-		 * blobKey.getKeyString())).now(); } else { ofy().save().entities(new
-		 * PublicDocument(user, fileName, fileDisplayName,
-		 * blobKey.getKeyString())).now(); }
-		 */
-
-		res.sendRedirect("/upload.jsp");
-
-		// Download the document using "/serve?blob-key=" +
-		// blobKey.getKeyString()"
-		/*
-		 * if (blobKey == null) { res.sendRedirect("/"); } else {
-		 * res.sendRedirect("/serve?blob-key=" + blobKey.getKeyString()); }
-		 */
+		//res.sendRedirect("/upload.jsp");
+		try {
+		    Thread.sleep(1000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+		res.sendRedirect(viewerLink);
 	}
 
 }
