@@ -1,5 +1,7 @@
 package fastref;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.List;
 import java.io.IOException;
 
@@ -69,17 +71,21 @@ public class ViewerServlet extends HttpServlet {
 		List<Document> documents = ObjectifyService.ofy().load().type(Document.class).list();
 		
 		Document found_document = null;
+		long saveID = 0;
 		if(sameblob != null) {
 			for (Document d : documents) {
 				if (d.getDocKey().equals(sameblob)) {
 					found_document = d;
+					saveID = d.id;
 					break;
 				}
 			}
 		}
 		
 		if(found_document != null) {
-			found_document.setBookmarks(newjson);	
+			found_document.setBookmarks(newjson);
+			ofy().save().entities(found_document).now();
+			
 		}
 		
 //		req.setAttribute("blobkey", sameblob);
