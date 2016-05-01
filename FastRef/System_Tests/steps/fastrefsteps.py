@@ -44,8 +44,14 @@ def step_impl(context):
 
 @when('User deletes file')
 def step_impl(context):
-	pass
-
+	url = context.url + 'listfiles.jsp'
+	key = context.privid
+	if context.public:
+		key = context.publid
+	body = {
+		'blob-key': key
+	}
+	context.response = context.session.get(url, data=body)
 @when('User adds tags')
 def step_impl(context):
 	pass
@@ -53,5 +59,5 @@ def step_impl(context):
 @then('status code is {sc}')
 def step_impl(context, sc):
 	s = context.response.status_code
-	print('status code is ' + str(s))
+	print('SSSStatus code is ' + str(s))
 	assert int(context.response.status_code) is int(sc)
