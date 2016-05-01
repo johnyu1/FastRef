@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.gson.Gson;
 import com.googlecode.objectify.ObjectifyService;
 
 public class ViewerServlet extends HttpServlet {
