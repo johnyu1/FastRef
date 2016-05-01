@@ -35,6 +35,7 @@
 		json = "{}";
 	}
 	String downloadLink="/serve?blob-key=" + blobkey;
+	String viewerLink="../viewer?blob-key=" + blobkey;
 	pageContext.setAttribute("downloadLink", downloadLink);
 %>
 	
@@ -89,11 +90,11 @@
 						if (user != null) {
 					%>
                   <li><a>Welcome ${fn:escapeXml(user.nickname)}</a></li>
-                  <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a></li>
+                  <li><a href="<%= userService.createLogoutURL(viewerLink) %>">Sign Out</a></li>
 					<%
 						} else {
 					%>
-                  <li><a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign In</a></li>
+                  <li><a href="<%= userService.createLoginURL(viewerLink) %>">Sign In</a></li>
 					<%
 					}
 					%>
