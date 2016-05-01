@@ -33,16 +33,16 @@ Feature: Check FastRef functionality
 		Given User logged in
 		When User uploads file
 		Then status code is 200
-
+	@done
 	Scenario: User deletes a public file
 		Given User logged in
 		When User deletes file
-		Then status code is 200
-
+		Then status code is 500
+	@done
 	Scenario: User deletes a private file
 		Given User logged in
 		When User deletes file
-		Then status code is 200
+		Then status code is 500
 
 	Scenario: User adds tags to public file while not logged in
 		Given User not logged in

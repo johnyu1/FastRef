@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
@@ -35,6 +36,7 @@
 		json = "{}";
 	}
 	String downloadLink="/serve?blob-key=" + blobkey;
+	String viewerLink="../viewer?blob-key=" + blobkey;
 	pageContext.setAttribute("downloadLink", downloadLink);
 %>
 	
@@ -89,11 +91,11 @@
 						if (user != null) {
 					%>
                   <li><a>Welcome ${fn:escapeXml(user.nickname)}</a></li>
-                  <li><a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">Sign Out</a></li>
+                  <li><a href="<%= userService.createLogoutURL(viewerLink) %>">Sign Out</a></li>
 					<%
 						} else {
 					%>
-                  <li><a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign In</a></li>
+                  <li><a href="<%= userService.createLoginURL(viewerLink) %>">Sign In</a></li>
 					<%
 					}
 					%>
@@ -105,35 +107,42 @@
 	<div class="container">
  		<div class="row">
 			<div class="col-md-4"> 
-				<form role="form" id="keyword-form" class="form-inline">
-					<input class="form-control" type="text" id="keyword" placeholder="Enter keyword"/>
-                    <span class="pull-right">
-                    <div class="btn-group" role="group" style="display:flex">
-                    <button type="button" class="btn btn-default" id="page-less"><span class="glyphicon glyphicon-chevron-left"></span></button>
-                    <button type="button" class="btn btn-default disabled" style="cursor: default" id="page-num">1</button>
-                    <button type="button" class="btn btn-default" id="page-more"><span class="glyphicon glyphicon-chevron-right"></span></button>
+				<div class="btn-group btn-group-justified">
+					<a href="${fn:escapeXml(downloadLink)}" class="btn btn-info">Download</a>
+					<a onclick="postJSON(keywords, blobid)" class="btn btn-success">Save</a>
+                </div>
+                <p id="saved"></p>
+				<form role="form" id="keyword-form" class="form-inline" style="margin-top: 10px">
+					<div class="form-group"> 
+						<input class="form-control" type="text" id="keyword" placeholder="Search keyword"/>
                     </div>
-                    </span>
+                    <div class="form-group"> 
+	                    <div class="btn-group" role="group" style="display:flex">
+	                    <button type="button" class="btn btn-default" id="page-less"><span class="glyphicon glyphicon-chevron-left"></span></button>
+	                    <button type="button" class="btn btn-default disabled" style="cursor: default" id="page-num">1</button>
+	                    <button type="button" class="btn btn-default" id="page-more"><span class="glyphicon glyphicon-chevron-right"></span></button>
+	                    </div>
+                    </div>
+                    
 				</form>
-                
-                <form role="form" id="keyword-add-form" class="form-inline" style="margin-top: 50px">
-					<input class="form-control" type="text" id="add-keyword" placeholder="New Keyword" style="width: 170px" />
-					<input class="form-control" style="width: 60px" type="text" id="add-page" placeholder="Page"/>
-                    <button class="btn btn-default" type="submit">Add</button> 
-                    <button class="btn btn-success" onclick="postJSON(keywords, blobid)">Save</button>       
+				
+                <form role="form" id="keyword-add-form" class="form-inline" style="margin-top: 20px">
+					<div class="form-group"> 
+						<input class="form-control" type="text" id="add-keyword" placeholder="New Keyword" />
+					</div>
+					<div class="form-group"> 
+						<input class="form-control" style="width: 60px" type="text" id="add-page" placeholder="Page"/>
+                   	</div>
+                   	<div class="form-group"> 
+                    	<button class="btn btn-default" type="submit">Add</button> 
+                    </div>
 				</form>
-				<p id="saved"></p>
-			
-	<!--  			<form role="form" id="keyword-save" class="form-inline" action="/viewer" method="post" style="margin-top: 50px">
-					<input type="hidden" name="json" value=/>
-					 <button class="btn btn-success" type="save">Save</button>
-				</form>-->
-                
+           
                 <div id="panel-holder" style="margin-bottom: 20px; padding: 0px; max-height: 500px">
                 </div>
  			</div>
 			<div class="col-md-8"> 
-				<a href=${fn:escapeXml(downloadLink)}>Download</a>   
+				   
 				<canvas id="the-canvas" style="border:1px  solid black"></canvas>
 		  	</div>
 		</div>

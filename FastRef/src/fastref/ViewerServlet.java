@@ -45,8 +45,9 @@ public class ViewerServlet extends HttpServlet {
 			
 			if(found_document.getDocRestriction().equals("private")) {
 				if(user == null || (user != null && !found_document.getUser().equals(user))) {
-					json = null;
-					blobkey = null;
+					resp.sendRedirect("/");
+					//json = null;
+					//blobkey = null;
 				}
 			}
 		}

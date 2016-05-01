@@ -13,8 +13,8 @@ class SessionGoogle:
         info['Email'] = login
         info['Passwd'] = pwd
         self.ses.post(url_auth, data=info)
-    def get(self, URL):
-        return self.ses.get(URL)
+    def get(self, URL, data=None):
+        return self.ses.get(URL, data=data)
 
     def post(self, URL, data=None, files=None):
     	return self.ses.post(URL, data=data, files=files)
