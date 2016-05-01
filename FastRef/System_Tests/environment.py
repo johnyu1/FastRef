@@ -13,9 +13,9 @@ def before_all(context):
 	context.publicfname = 'publictest.pdf'
 	context.privatefname = 'privatetest.pdf'
 	context.payld = {
-		'restriction':''
+		'restriction':'',
 		'document':''
 	}
 	# these are for access tests
-	context.privid = 'AMIfv94Jb3FctN-hIIGrbt29S80U9Cdt2KxysQnMUkTs9jCX4S39azxqibn_10glMcfPSCTzTyIf2uvFyTBChDDIt6cly10t3H0t85KbCPI85XeHTX17uYkRFzTaIj7ZqUGW8CD_G3fIIihm4uyqwcmkgo_FJGi4tQ'
-	context.publid = 'AMIfv94AglBCY6EMzH1R4zXIiRDwmcu3GhpXzDOCHI2yxZ0S_f5zJZuN3R-WoboANQDQEMFwG1-5CmpZCg0thZqftdT0QQBL94Xr9j3-xQvUjV3RXOioZbgK4bW8YTifvVWjsl7n9L1BZ60Us-oBUiUL44z8F7LqZw'
+	context.privid = 'AMIfv97A96HdF0f1ETd8pcKSKBy9Rz_r0xN3YNFBz-8G26Qs166K2-dzVj_OakyPmmwsQYZ4WPdXGKJUZX2Au5cD9nIAbmuJbjFDQcCi1XTfBm24i7QKJLKGlSUkYmwmEAroI5HBSyJmcQR6NPjkQvoNX5ZBGBfMZg'
+	context.publid = 'AMIfv97fkfb5g-1_Cp9Dm3DLPV46Ftma9n6ucTyylGnt2gOsbDKIr9Oy3dWwjxY1hGjTZJM5awCTZOxWvnHYwqalhIUPTRASLi51dQfweJgymeQQjhKJsihBaozjzcfGg0fg9F_HWcqXBlDdtwsFIpgCDnANlwvu4A'
