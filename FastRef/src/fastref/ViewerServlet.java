@@ -23,7 +23,7 @@ public class ViewerServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String json, blobkey;
-		blobkey = req.getParameter("key");
+		blobkey = req.getParameter("blob-key");
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		List<Document> documents = ObjectifyService.ofy().load().type(Document.class).list();
