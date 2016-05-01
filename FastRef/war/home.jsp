@@ -64,7 +64,9 @@
 			</div>
 		</div>
 	</nav>
-	<h1 align='center'>FANCY LOGO HERE</h1>
+	<div align='center'>
+	  <img src="pictures/FastRefBanner.png" alt="Banner" style="width:50%;">
+	</div>
 <%
 	ObjectifyService.register(Document.class);
 	List<Document> documents = ObjectifyService.ofy().load().type(Document.class).list();   
