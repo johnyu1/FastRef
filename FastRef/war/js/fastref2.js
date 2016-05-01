@@ -66,6 +66,8 @@ $(document).ready(function(event) {
     });
 });
 
+
+
 function searchAndUpdate(text) {
     var keyword_res = "";
     var page_res = "";
@@ -176,3 +178,8 @@ function renderPage(pageNum) {
         page.render(renderContext);
     });
 }
+
+function myFunction(keywords, blobid) {
+    $.post("/viewer",{"newjson":JSON.stringify(keywords), "sameblob":blobid});
+}
+    

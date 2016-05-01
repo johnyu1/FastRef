@@ -30,13 +30,17 @@
 	<script src="js/fastref2.js"></script>
 
 <%	String blobkey = (String)request.getAttribute("blobkey"); %>
-<%	String json = (String)request.getAttribute("json"); %>
+<%	String json = (String)request.getAttribute("json"); 
+	if(json.equals("")) {
+		json = "{}";
+	}
+%>
 	
 	<script>
+		var blobid = '<%= blobkey%>';
 		var pdf_url = '/serve?blob-key=<%= blobkey%>';
 		keywords = <%= json%>;
-	</script>
-	<script>
+
         loadPDF(function() {
             renderPage(1);
         });
@@ -98,9 +102,9 @@
 					<input class="form-control" type="text" id="add-keyword" placeholder="New Keyword" style="width: 170px" />
 					<input class="form-control" style="width: 60px" type="text" id="add-page" placeholder="Page"/>
                     <button class="btn btn-default" type="submit">Add</button> 
-                    <button class="btn btn-success" onclick="postjson()">Save</button>       
+                    <button class="btn btn-success" onclick="myFunction(keywords, blobid)">Save</button>       
 				</form>
-				
+			
 	<!--  			<form role="form" id="keyword-save" class="form-inline" action="/viewer" method="post" style="margin-top: 50px">
 					<input type="hidden" name="json" value=/>
 					 <button class="btn btn-success" type="save">Save</button>
