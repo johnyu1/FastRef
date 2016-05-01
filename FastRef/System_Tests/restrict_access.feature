@@ -16,7 +16,7 @@ Feature: Check FastRef functionality
 		Given User not logged in
 		Given File is private
 		When User accesses file
-		Then status code is 404
+		Then status code is 200
 	@done
 	Scenario: User access private file while logged in
 		Given User logged in
