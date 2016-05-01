@@ -46,21 +46,15 @@ public class ViewerServlet extends HttpServlet {
 			if(found_document.getDocRestriction().equals("private")) {
 				if(user == null || (user != null && !found_document.getUser().equals(user))) {
 					resp.sendRedirect("/");
-					//json = null;
-					//blobkey = null;
+					return;
 				}
 			}
 		}
-		
-	//	json = "{'ADD':{'page':8},'AND':{'page':9},'BR':{'page':10},'JMP':{'page':11},'RET':{'page':11},'Memory':{'page':10}}";
-		
-	//	req.setAttribute("blobkey", "HD0v7veusxxm8Zz9vqFfzw");
+	
 		req.setAttribute("blobkey", blobkey);
 		req.setAttribute("json", json);
 				
 		req.getRequestDispatcher("viewer.jsp").forward(req, resp);
-
-		// resp.sendRedirect("/viewer.jsp?");
 	}
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
