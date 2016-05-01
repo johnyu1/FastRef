@@ -127,7 +127,7 @@
 	            pageContext.setAttribute("document_restrictions", document.getDocRestriction());
 	            String downloadLink = "";
 	            if(!document.getDocKey().equals(null)){
-	            	downloadLink="/serve?blob-key=" + document.getDocKey();
+	            	downloadLink="/viewer?blob-key=" + document.getDocKey();
 	            }
 	            pageContext.setAttribute("document_key", downloadLink);
 	            String documentType = document.getDocType();
@@ -196,7 +196,7 @@
 	            String downloadLink = "";
 	            if(!document.getDocKey().equals(null))
 	            {
-	            	downloadLink="/serve?blob-key=" + document.getDocKey();
+	            	downloadLink="/viewer?blob-key=" + document.getDocKey();
 	            }
 	            pageContext.setAttribute("document_key", downloadLink);
 	            String documentType = document.getDocType();
