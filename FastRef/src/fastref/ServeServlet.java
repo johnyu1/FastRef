@@ -38,6 +38,7 @@ public class ServeServlet extends HttpServlet {
 		if(found_document.getDocRestriction().equals("private")) {
 			if(user == null || (user != null && !found_document.getUser().equals(user))) {
 				res.sendRedirect("/");
+				return;
 			}
 		}
 		BlobKey blobKey = new BlobKey(req.getParameter("blob-key"));
