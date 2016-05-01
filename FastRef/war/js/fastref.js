@@ -1,6 +1,7 @@
 PDFDoc = false;
 currentPage = 1;
 currentKW = 0;
+canClickButton = true;
 
 keywords = {
     ADD : { page: 8 },
@@ -55,14 +56,18 @@ $(document).ready(function(event) {
     });
     
     $("#page-less").click(function(event) {
+        if (!canClickButton) { return; }
         if (currentPage == 1) { return; }
+        canClickButton = false;
         updatePage(currentPage - 1);
         $("#keyword").val("");
         removeCurrent();
     });
     
     $("#page-more").click(function(event) {
+        if (!canClickButton) { return; }
         if (currentPage == PDFDoc.pdfInfo.numPages) { return; }
+        canClickButton = false;
         updatePage(currentPage + 1);
         $("#keyword").val("");
         removeCurrent();
@@ -186,6 +191,10 @@ function renderPage(pageNum) {
             canvasContext: context,
             viewport: viewport
         };
-        page.render(renderContext);
+        page.render(renderContext).then(function() {
+            canClickButton = true;
+        }, function() {
+            canClickButton = true;
+        });
     });
 }

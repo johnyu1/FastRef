@@ -1,6 +1,7 @@
 PDFDoc = false;
 currentPage = 1;
 currentKW = 0;
+canClickButton = true;
 
 $(document).ready(function(event) {
     createAllPanels();
@@ -45,6 +46,8 @@ $(document).ready(function(event) {
     
     $("#page-less").click(function(event) {
         if (currentPage == 1) { return; }
+        if (!canClickButton) { return; }
+        canClickButton = false;
         updatePage(currentPage - 1);
         $("#keyword").val("");
         removeCurrent();
@@ -52,6 +55,8 @@ $(document).ready(function(event) {
     
     $("#page-more").click(function(event) {
         if (currentPage == PDFDoc.pdfInfo.numPages) { return; }
+        if (!canClickButton) { return; }
+        canClickButton = false;
         updatePage(currentPage + 1);
         $("#keyword").val("");
         removeCurrent();
@@ -175,7 +180,11 @@ function renderPage(pageNum) {
             canvasContext: context,
             viewport: viewport
         };
-        page.render(renderContext);
+        page.render(renderContext).then(function() {
+            canClickButton = true;
+        }, function() {
+            canClickButton = true;
+        });
     });
 }
 
