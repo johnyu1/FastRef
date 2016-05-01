@@ -86,9 +86,9 @@
 <%	
 		int i = 0;
         for (Document document : documents) {
-        	i++;
         	if(document.getDocRestriction().equals("public") || (document.getUser() != null && 
         			document.getUser().equals(user))){
+            	i++;
 	            pageContext.setAttribute("document_name", document.getDocName());
 	            pageContext.setAttribute("document_ext", document.getDocExt());
 	            pageContext.setAttribute("document_date", document.getDocDate());

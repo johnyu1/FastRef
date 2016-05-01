@@ -92,6 +92,8 @@
 	            	downloadLink="/serve?blob-key=" + document.getDocKey();
 	            }
 	            pageContext.setAttribute("document_key", downloadLink);
+	            String deleteLink ="/delete?blob-key=" + document.getDocKey();
+	            pageContext.setAttribute("delete_link", deleteLink);
 	            String documentType = document.getDocType();
 	            String docType = "fa fa-file-o";
 	            if(documentType != null) {
@@ -116,6 +118,14 @@
 					<i class='${fn:escapeXml(document_type)}' style="font-size:48px"></i>
 						${fn:escapeXml(document_name)}
 				</a>     	
+<%
+				if(user != null && document.getUser().equals(user))
+				{
+%>
+					<a href=${fn:escapeXml(delete_link)}>Delete</a>
+<%
+				}
+%>	
 			</div>
 <%
         	}
