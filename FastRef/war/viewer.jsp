@@ -34,6 +34,8 @@
 	if(json.equals("")) {
 		json = "{}";
 	}
+	String downloadLink="/serve?blob-key=" + blobkey;
+	pageContext.setAttribute("downloadLink", downloadLink);
 %>
 	
 	<script>
@@ -118,8 +120,9 @@
 					<input class="form-control" type="text" id="add-keyword" placeholder="New Keyword" style="width: 170px" />
 					<input class="form-control" style="width: 60px" type="text" id="add-page" placeholder="Page"/>
                     <button class="btn btn-default" type="submit">Add</button> 
-                    <button class="btn btn-success" onclick="myFunction(keywords, blobid)">Save</button>       
+                    <button class="btn btn-success" onclick="postJSON(keywords, blobid)">Save</button>       
 				</form>
+				<p id="saved"></p>
 			
 	<!--  			<form role="form" id="keyword-save" class="form-inline" action="/viewer" method="post" style="margin-top: 50px">
 					<input type="hidden" name="json" value=/>
@@ -130,6 +133,7 @@
                 </div>
  			</div>
 			<div class="col-md-8"> 
+				<a href=${fn:escapeXml(downloadLink)}>Download</a>   
 				<canvas id="the-canvas" style="border:1px  solid black"></canvas>
 		  	</div>
 		</div>
