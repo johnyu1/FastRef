@@ -179,7 +179,23 @@ function renderPage(pageNum) {
     });
 }
 
-function myFunction(keywords, blobid) {
+function postJSON(keywords, blobid) {
+	var currentdate = new Date(); 
+	var minutes = currentdate.getMinutes();
+	if(currentdate.getMinutes() < 10)
+	{
+		minutes = "0" + minutes;
+	}
+	var datetime = "Last saved: " + currentdate.getDate() + "/"
+	                + (currentdate.getMonth()+1)  + "/" 
+	                + currentdate.getFullYear() + " @ "  
+	                + currentdate.getHours() + ":"  
+	                + minutes;
+	document.getElementById("saved").innerHTML = datetime;
     $.post("/viewer",{"newjson":JSON.stringify(keywords), "sameblob":blobid});
+}
+function download(blobid){
+	document.getElementById("download").innerHTML = "Download";
+	$.post("/serve",{"blob-key":blobid});
 }
     
