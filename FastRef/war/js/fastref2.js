@@ -2,15 +2,6 @@ PDFDoc = false;
 currentPage = 1;
 currentKW = 0;
 
-keywords = {
-    ADD : { page: 8 },
-    AND : { page: 9 },
-    BR  : { page: 10},
-    JMP : { page: 11},
-    RET : { page: 11},
-    Memory : { page: 10 }
-};
-
 $(document).ready(function(event) {
     createAllPanels();
 
@@ -47,8 +38,6 @@ $(document).ready(function(event) {
         $("#add-keyword").blur();
         $("#add-page").blur();
     });
-    
-    
     
     $(".click-remove").click(function(event) {
         removeKeyword(this);
@@ -157,8 +146,6 @@ function searchKeyword(input) {
     }
 }
 
-
-var pdf_url = './LC-3b_ISA.pdf';
 PDFJS.workerSrc = 'js/pdf/pdf.worker.js';
 
 function loadPDF(callback = function(){}) {

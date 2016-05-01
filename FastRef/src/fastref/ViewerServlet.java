@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gson.Gson;
 import com.googlecode.objectify.ObjectifyService;
 
 public class ViewerServlet extends HttpServlet {
@@ -18,28 +19,57 @@ public class ViewerServlet extends HttpServlet {
 	static {
 		ObjectifyService.register(Document.class);
 	}
-	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String documentKey = req.getParameter("id");
+		String json, blobkey;
+		blobkey = req.getParameter("key");
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		List<Document> documents = ObjectifyService.ofy().load().type(Document.class).list();
-		Document serve = new Document();
-		for(Document d : documents) {
-			if(d.documentKey.equals(documentKey)) {
-				serve = d;
+		
+		Document found_document = null;
+		if(blobkey != null) {
+			for (Document d : documents) {
+				if (d.getDocKey().equals(blobkey)) {
+					found_document = d;
+				}
 			}
 		}
-		serve.getUser();
 		
-//		if(!serve.getUser().equals(user)) {
-			//resp.sendError(404);
-//		}
+		if(found_document != null) {
+			json = found_document.getBookmarks();	
+			
+			if(found_document.getDocRestriction().equals("private")) {
+				if(user == null || (user != null && !found_document.getUser().equals(user))) {
+					json = null;
+					blobkey = null;
+				}
+			}
+		}
 		
-		req.getRequestDispatcher("/WEB-INF/viewer.jsp").forward(req, resp);
+		json = "{'ADD':{'page':8},'AND':{'page':9},'BR':{'page':10},'JMP':{'page':11},'RET':{'page':11},'Memory':{'page':10}}";
+		
+	//	req.setAttribute("blobkey", "HD0v7veusxxm8Zz9vqFfzw");
+		req.setAttribute("blobkey", blobkey);
+		req.setAttribute("json", json);
+				
+		req.getRequestDispatcher("viewer.jsp").forward(req, resp);
+
+		// resp.sendRedirect("/viewer.jsp?");
+	}
 	
-		//resp.sendRedirect("/upload.jsp");
+	class Keyword {
+		
+	}
+	
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String json = "{'ADD':{'page':8},'AND':{'page':9},'BR':{'page':10},'JMP':{'page':11},'RET':{'page':11},'Memory':{'page':10}}";
+		req.setAttribute("blobkey", "HD0v7veusxxm8Zz9vqFfzw");
+		req.setAttribute("json", json);
+		req.getRequestDispatcher("viewer.jsp").forward(req, resp);
+		
 	}
 
 }

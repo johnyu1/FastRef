@@ -1,7 +1,7 @@
 package fastref;
 
+import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.regex.Pattern;
 
 import com.google.appengine.api.users.User;
@@ -22,13 +22,13 @@ public class Document implements Comparable<Document> {
 	String docRestriction;
 	String documentBookmarks;
 	Date date;
-	
+
 	/**
-	 * Default Constructor. Creates a default document.
-	 * <br>User: "FastRefTest@gmail.com"
-	 * <br>documentName: "Default.pdf"
-	 * <br>documentKey: null
-	 * <br>restriction: "private"
+	 * Default Constructor. Creates a default document. <br>
+	 * User: "FastRefTest@gmail.com" <br>
+	 * documentName: "Default.pdf" <br>
+	 * documentKey: null <br>
+	 * restriction: "private"
 	 * 
 	 */
 	public Document() {
@@ -41,17 +41,23 @@ public class Document implements Comparable<Document> {
 		this.docRestriction = "private";
 		this.documentBookmarks = "";
 		date = new Date();
-	
+
 	}
-	
+
 	/**
 	 * Document constructor - populates the fields
 	 * 
-	 * @param user a User object
-	 * @param documentName the original name of the document. Must have an extension at the end (.pdf, .txt, .doc, etc.)
-	 * @param documentInputtedName the new inputed name to rename the document
-	 * @param documentKey the document blobKey.toString()
-	 * @param restriction the restriction setting (either "public" or "private")
+	 * @param user
+	 *            a User object
+	 * @param documentName
+	 *            the original name of the document. Must have an extension at
+	 *            the end (.pdf, .txt, .doc, etc.)
+	 * @param documentInputtedName
+	 *            the new inputed name to rename the document
+	 * @param documentKey
+	 *            the document blobKey.toString()
+	 * @param restriction
+	 *            the restriction setting (either "public" or "private")
 	 */
 	public Document(User user, String documentName,
 			String documentInputtedName, String documentKey, String restriction) {
@@ -61,17 +67,21 @@ public class Document implements Comparable<Document> {
 		this.docRestriction = restriction;
 		this.docExt = parseFileExtension(documentName);
 		this.docType = determineFileType(this.docExt);
-		this.documentDisplayName = createDisplayName(documentName.trim(), documentInputtedName.trim());
+		this.documentDisplayName = createDisplayName(documentName.trim(),
+				documentInputtedName.trim());
 		this.documentBookmarks = "";
 		date = new Date();
 	}
-	
+
 	/**
-	 * Compares the extension of the original file name and new file name to determine
-	 * the correct display name. Returns a correctly formatted display name.
+	 * Compares the extension of the original file name and new file name to
+	 * determine the correct display name. Returns a correctly formatted display
+	 * name.
 	 * 
-	 * @param origName the original document name (has an extension)
-	 * @param newName the inputed new document name
+	 * @param origName
+	 *            the original document name (has an extension)
+	 * @param newName
+	 *            the inputed new document name
 	 * @return String display name with correctly appended extension
 	 */
 	public String createDisplayName(String origName, String newName) {
@@ -86,29 +96,30 @@ public class Document implements Comparable<Document> {
 		}
 		return displayName + "." + origExt;
 	}
-	
+
 	/**
-	 * Parses the document name to get the file extension.
-	 * If no extension, then null ("") is returned.
+	 * Parses the document name to get the file extension. If no extension, then
+	 * null ("") is returned.
 	 * 
-	 * @param fileName the document name. Must have an extension.
+	 * @param fileName
+	 *            the document name. Must have an extension.
 	 * @return the file extension. Default is ""
 	 */
 	public String parseFileExtension(String fileName) {
 		String[] splitName = fileName.split(Pattern.quote("."));
-		if(splitName.length <= 1)
-		{
+		if (splitName.length <= 1) {
 			return "";
 		}
 		String extension = splitName[splitName.length - 1].toLowerCase();
 		return extension;
 	}
-	
+
 	/**
-	 * Determines the file type based on the 
-	 * file extension. Used for grouping extensions.
+	 * Determines the file type based on the file extension. Used for grouping
+	 * extensions.
 	 * 
-	 * @param extension the extension of the file (pdf, doc, txt, etc.)
+	 * @param extension
+	 *            the extension of the file (pdf, doc, txt, etc.)
 	 * @return the file type (pdf, text, iamge, etc.)
 	 */
 	public String determineFileType(String extension) {
@@ -125,7 +136,7 @@ public class Document implements Comparable<Document> {
 		}
 		return fileType;
 	}
-	
+
 	/**
 	 * Returns the user/creator of the document
 	 * 
@@ -134,7 +145,7 @@ public class Document implements Comparable<Document> {
 	public User getUser() {
 		return user;
 	}
-	
+
 	/**
 	 * Returns the document display name
 	 * 
@@ -143,7 +154,7 @@ public class Document implements Comparable<Document> {
 	public String getDocName() {
 		return documentDisplayName;
 	}
-	
+
 	/**
 	 * Returns the documents extension
 	 * 
@@ -152,17 +163,17 @@ public class Document implements Comparable<Document> {
 	public String getDocExt() {
 		return docExt;
 	}
-	
+
 	/**
-	 * Returns the documents corresponding blobKey as a
-	 * String. blobKey.toString()
+	 * Returns the documents corresponding blobKey as a String.
+	 * blobKey.toString()
 	 * 
 	 * @return the document key (blobKey.toString())
 	 */
 	public String getDocKey() {
 		return documentKey;
 	}
-	
+
 	/**
 	 * Returns the document type.
 	 * 
@@ -171,7 +182,7 @@ public class Document implements Comparable<Document> {
 	public String getDocType() {
 		return docType;
 	}
-	
+
 	/**
 	 * Returns the document restriction (either "public" or "private")
 	 * 
@@ -180,16 +191,17 @@ public class Document implements Comparable<Document> {
 	public String getDocRestriction() {
 		return docRestriction;
 	}
-	
+
 	/**
 	 * Updates the document bookmarks
 	 * 
-	 * @param jsoninput JSON string with all the bookmarks
+	 * @param jsoninput
+	 *            JSON string with all the bookmarks
 	 */
 	public void setBookmarks(String jsoninput) {
 		documentBookmarks = jsoninput;
 	}
-	
+
 	/**
 	 * Returns the document bookmarks
 	 * 
@@ -198,37 +210,37 @@ public class Document implements Comparable<Document> {
 	public String getBookmarks() {
 		return documentBookmarks;
 	}
-	
+
 	/**
 	 * Returns the date/time the document was uploaded
 	 * 
 	 * @return the document Date
 	 */
-    public Date getDocDate(){
-    	return date;
-    }
-    
-    /**
-     * Overriding compareTo function that compare the documents alphabetically.
-     * If the file names are the same, the date/time the document was uploaded
-     * is compared.
-     */
-    @Override
-    public int compareTo(Document other) {
-    	int compare = documentName.compareTo(other.documentName);
-    	if(compare == 0)
-    	{
-	        if (date.after(other.date)) {
+	public Date getDocDate() {
+		return date;
+	}
+
+	/**
+	 * Overriding compareTo function that compare the documents alphabetically.
+	 * If the file names are the same, the date/time the document was uploaded
+	 * is compared.
+	 */
+	@Override
+	public int compareTo(Document other) {
+		int compare = documentName.compareTo(other.documentName);
+		if (compare == 0) {
+			if (date.after(other.date)) {
+				return 1;
+			} else if (date.before(other.date)) {
+				return -1;
+			}
+		}
+		return compare;
+	}
 	
-	            return 1;
-	
-	        } else if (date.before(other.date)) {
-	
-	            return -1;
-	
-	        }
-    	}
-        return compare;
-    }
+	private class Keyword {
+		String name;
+		int pageNum;
+	}
 
 }

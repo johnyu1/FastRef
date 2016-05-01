@@ -39,21 +39,20 @@ public class DeleteServlet extends HttpServlet {
 			throws ServletException, IOException {
 		BlobKey blobKey = new BlobKey(req.getParameter("blob-key"));
 		blobstoreService.delete(blobKey);
-		List<Document> documents = ofy().load().type(Document.class).list(); 
+		List<Document> documents = ofy().load().type(Document.class).list();
 		long deleteDocID = 0L;
-		for(Document document: documents)
-		{
-			if(document.getDocKey().equals(blobKey.getKeyString()))
-			{
+		for (Document document : documents) {
+			if (document.getDocKey().equals(blobKey.getKeyString())) {
 				deleteDocID = document.id;
 			}
 		}
 		ofy().delete().type(Document.class).id(deleteDocID).now();
 		res.sendRedirect("/listfiles.jsp");
 	}
+
 	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException
-	{
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
 		res.sendRedirect("/listfiles.jsp");
 	}
 

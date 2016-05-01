@@ -15,6 +15,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>FastRef</servlet-name>
 		<url-pattern>/fastref</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>Home</servlet-name>
 		<servlet-class>fastref.HomeServlet</servlet-class>
@@ -23,6 +24,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>Home</servlet-name>
 		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
+	
     <servlet>
     	<servlet-name>upload</servlet-name>
     	<servlet-class>fastref.UploadServlet</servlet-class>
@@ -31,6 +33,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>upload</servlet-name>
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>  
+	
 	<servlet>
     	<servlet-name>serve</servlet-name>
     	<servlet-class>fastref.ServeServlet</servlet-class>
@@ -39,6 +42,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     	<servlet-name>serve</servlet-name>
     	<url-pattern>/serve</url-pattern>
   	</servlet-mapping> 
+  	
   	<servlet>
     	<servlet-name>viewer</servlet-name>
     	<servlet-class>fastref.ViewerServlet</servlet-class>
@@ -47,14 +51,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   		<servlet-name>viewer</servlet-name>
   		<url-pattern>/viewer</url-pattern>
   	</servlet-mapping>
-  	  	<servlet>
-    	<servlet-name>delete</servlet-name>
-    	<servlet-class>fastref.DeleteServlet</servlet-class>
+  	
+  	<servlet>
+    <servlet-name>delete</servlet-name>
+    <servlet-class>fastref.DeleteServlet</servlet-class>
   	</servlet>
   	<servlet-mapping>
   		<servlet-name>delete</servlet-name>
   		<url-pattern>/delete</url-pattern>
   	</servlet-mapping>
+  	
 	<filter>
         <filter-name>ObjectifyFilter</filter-name>
         <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
@@ -63,6 +69,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
         <filter-name>ObjectifyFilter</filter-name>
         <url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
     <security-constraint>
     <web-resource-collection>
         <web-resource-name>upload</web-resource-name>
