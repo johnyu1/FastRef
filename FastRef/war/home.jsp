@@ -147,5 +147,22 @@
         }
     }
 %>
+	<div class="container" style="bottom:0">
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<b>About Us</b>
+		<p>Creators: Cassidy B., Leela K., Jessica L., John Y. (Group 14)</p>
+		<p>Web application created Spring 2016 for EE461L. Purpose of quick and easy document
+		 references in place of the traditional "CTL + F" functionality. This is done by allowing the creation of 
+		 personal keyword bookmarks for documents.
+		 </p>
+		<p>Contact us at 
+			<a href="mailto:FastRefTest@gmail.com?Subject=FastRef" target="_top">FastRefTest@gmail.com</a>
+		</p>
+	</div>	
 </body>
 </html>
