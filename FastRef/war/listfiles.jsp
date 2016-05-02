@@ -28,40 +28,40 @@
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 	<script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    
-        <style>
-    iframe {
-        border: none;
-        width: 100%;
-        height: 100%;
-    }
-    
-    .iframe-parent {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .thumbnail:hover {
-        text-decoration: none;
-    }
-    
-    .document {
-        padding-bottom: 10px;
-    }
-    
-    .thumb-title {
-        margin: 0;
-    }
-    </style>
-    
-    <script>
-        $(document).ready(function() {
-            $(".delete-btn").click(function(event) {
-                event.preventDefault();
-                window.location.replace($(this).attr("href"));
-            });
-        });
-    </script>
+
+	<style>
+	iframe {
+		border: none;
+		width: 100%;
+		height: 100%;
+	}
+	
+	.iframe-parent {
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.thumbnail:hover {
+		text-decoration: none;
+	}
+	
+	.document {
+		padding-bottom: 10px;
+	}
+	
+	.thumb-title {
+		margin: 0;
+	}
+	</style>
+	
+	<script>
+		$(document).ready(function() {
+			$(".delete-btn").click(function(event) {
+				event.preventDefault();
+				window.location.replace($(this).attr("href"));
+			});
+		});
+	</script>
 </head>
     
 <body>
@@ -119,11 +119,12 @@
 	            pageContext.setAttribute("document_name", document.getDocName());
 	            pageContext.setAttribute("document_ext", document.getDocExt());
 	            pageContext.setAttribute("document_restrictions", document.getDocRestriction());
+	            pageContext.setAttribute("document_date", document.getDocDate());
 	            String downloadLink = "";
                 String pdfLink = "";
 	            if(!document.getDocKey().equals(null)){
 	            	downloadLink="/viewer?blob-key=" + document.getDocKey();
-                    pdfLink="http://fast-ref.appspot.com/serve?blob-key=" + blobkey;
+                    pdfLink="/serve?blob-key=" + document.getDocKey();
                     pdfLink = URLEncoder.encode(pdfLink, "UTF-8");
 	            }
 	            pageContext.setAttribute("document_key", downloadLink);
@@ -150,16 +151,16 @@
 				pageContext.setAttribute("document_type", docType);	           
 %>
             <div class="col-xs-4 document">
-                <a href=${fn:escapeXml(document_key)} class="thumbnail">
+                <a href="${fn:escapeXml(document_key)}" class="thumbnail">
                   <span class="iframe-parent">
-                    <iframe src="web/viewer.html?file=<%= document_link %>"></iframe>
+                    <iframe src="web/viewer.html?file=${fn:escapeXml(document_link)}"></iframe>
                   </span>
                   
                   <span class="caption" style="padding: 0">
-                    <span><h1 class="thumb-title" style="margin-left: 10px; display: inline-block;"><small>${fn:escapeXML(document_name)}</small></h1>
-                    <span class="pull-right"><button href=${fn:escapeXML(delete_link)} class="btn btn-danger delete-btn" style="margin-left: 10px; margin-top: 5px;">Delete</button></span></span><br />
-                    <small style="margin-left: 40px; margin-bottom: 50px">Thursday 10:30pm</small><br />
-                    <small style="margin-left: 40px; margin-bottom: 50px">20 Tags</small>
+                    <span><h1 class="thumb-title" style="margin-left: 10px; display: inline-block;"><small>${fn:escapeXml(document_name)}</small></h1>
+                    <span class="pull-right"><button href="${fn:escapeXml(delete_link)}" class="btn btn-danger delete-btn" style="margin-left: 10px; margin-top: 5px;">Delete</button></span></span><br />
+                    <small style="margin-left: 40px; margin-bottom: 50px">${fn:escapeXml(document_date)}</small><br />
+
                   </span>
                 </a>
             </div>
@@ -195,6 +196,7 @@
         			document.getUser().equals(user))){
 	            pageContext.setAttribute("document_name", document.getDocName());
 	            pageContext.setAttribute("document_ext", document.getDocExt());
+	            pageContext.setAttribute("document_date", document.getDocDate());
 	            String downloadLink = "";
 	            if(!document.getDocKey().equals(null))
 	            {
@@ -228,11 +230,10 @@
 	           
 %>	
         <div class="col-xs-4 document">
-            <a href=${fn:escapeXml(document_key)} class="thumbnail">
+            <a href="${fn:escapeXml(document_key)}" class="thumbnail">
               <span class="caption" style="padding: 0">
-                <span><h1 class="thumb-title" style="margin-left: 10px; display: inline-block;"><small>${fn:escapeXML(document_name)}</small></h1></span><br />
-                <small style="margin-left: 40px; margin-bottom: 50px">Thursday 10:30pm</small><br />
-                <small style="margin-left: 40px; margin-bottom: 50px">20 Tags</small>
+                <span><h1 class="thumb-title" style="margin-left: 10px; display: inline-block;"><small>${fn:escapeXml(document_name)}</small></h1></span><br />
+                <small style="margin-left: 40px; margin-bottom: 50px">${fn:escapeXml(document_date)}</small><br />
               </span>
             </a>
         </div>
