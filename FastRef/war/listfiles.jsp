@@ -113,7 +113,7 @@
 	else if(user != null){
 		int i = 0;
         for (Document document : documents) {
-        	if(document.getDocRestriction().equals("private") && document.getUser() != null && 
+        	if(document.getUser() != null && 
         			document.getUser().equals(user)){
         		i++;
 	            pageContext.setAttribute("document_name", document.getDocName());
